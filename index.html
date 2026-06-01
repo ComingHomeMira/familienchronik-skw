@@ -172,20 +172,21 @@ graph TD
   WW["Wolfgang Wenger<br/>✱ 20.07.1936 · † 13.11.1962"]:::mat
 
   FK["Fritz Kohler<br/>✱ 02.06.1933 Landsberg a.L.<br/>† 12.05.2025"]:::mat
+  ELFIE["Elfriede „Elfie / Awili“ Kohler<br/>✱ 29.04.1930 · † ?"]:::mat
   IK["Ingrid Kohler, geb. Wenger<br/>✱ 25.06.1933 · † 04.04.2018"]:::mat
 
   US["Ulrich Schönbach<br/>✱ 10.09.1966 Fürstenfeldbruck"]:::live
   BK["Barbara Schönbach, geb. Kohler<br/>✱ 25.02.1964"]:::live
-  PET["Petra Kohler"]:::live
-  MAR["Martin Kohler"]:::live
+  PET["Petra Kohler<br/>✱ 21.06.1962"]:::live
+  MAR["Martin Kohler<br/>✱ 12.03.1967"]:::live
   L["Lennard Schönbach<br/>✱ 18.06.1997 Landsberg a.L."]:::live
   LE["Leonie Schönbach<br/>✱ 08.02.2000 Landsberg a.L."]:::live
-  ELLEN["Eleonore „Ellen“ Bajog, geb. Schönbach<br/>Türkenfeld"]:::live
-  SAN["Sandra Scharf, geb. Bajog"]:::live
-  ALEX["Alexander Bajog"]:::live
-  ANT["Antonia Ettner"]:::live
-  MAXI["Maximilian Ettner"]:::live
-  CORB["Corbinian Ettner"]:::live
+  ELLEN["Eleonore „Ellen“ Bajog, geb. Schönbach<br/>✱ 16.09.1961 · Türkenfeld"]:::live
+  SAN["Sandra Scharf, geb. Bajog<br/>✱ 19.03.1993"]:::live
+  ALEX["Alexander Bajog<br/>✱ 15.09.1986"]:::live
+  ANT["Antonia Ettner<br/>✱ 23.07.1990"]:::live
+  MAXI["Maximilian Ettner<br/>✱ 10.03.1992"]:::live
+  CORB["Korbinian Ettner<br/>✱ 03.07.1995"]:::live
 
   FRRE --> MRE
   SURE --> MRE
@@ -206,6 +207,8 @@ graph TD
   ELLEN --> ALEX
   FKS --> FK
   FRK --> FK
+  FKS --> ELFIE
+  FRK --> ELFIE
   FW --> IK
   HW --> IK
   FW --> WW
@@ -242,6 +245,7 @@ graph TD
   click HW call jumpTo("p-hanni")
   click WW call jumpTo("p-wolfgang")
   click FK call jumpTo("p-fritzk")
+  click ELFIE call jumpTo("p-elfie")
   click IK call jumpTo("p-ingrid")
   click US call jumpTo("p-ulrich")
   click BK call jumpTo("p-barbara")
@@ -273,20 +277,20 @@ graph TD
         <div class="person live" id="p-leonie"><div class="rl">Schwester</div><div class="nm">Leonie Schönbach</div><div class="dt">✱ 08.02.2000 · Landsberg am Lech</div></div>
         <div class="person live" id="p-ulrich"><div class="rl">Vater</div><div class="nm">Ulrich Schönbach</div><div class="dt">✱ 10.09.1966 · Fürstenfeldbruck</div></div>
         <div class="person live" id="p-barbara"><div class="rl">Mutter</div><div class="nm">Barbara Schönbach, geb. Kohler</div><div class="dt">✱ 25.02.1964</div></div>
-        <div class="person live" id="p-petra"><div class="rl">Tante · mütterlich</div><div class="nm">Petra Kohler</div><div class="note">Schwester von Barbara. Kinder: Antonia, Maximilian und Corbinian Ettner. Trägt viele der Familiendaten zusammen.</div></div>
-        <div class="person live" id="p-martin"><div class="rl">Onkel · mütterlich</div><div class="nm">Martin Kohler</div><div class="note">Bruder von Barbara.</div></div>
-        <div class="person live" id="p-ellen"><div class="rl">Tante · väterlich</div><div class="nm">Eleonore „Ellen" Bajog, geb. Schönbach</div><div class="note">Schwester von Ulrich, wohnt in Türkenfeld.</div></div>
+        <div class="person live" id="p-petra"><div class="rl">Tante · mütterlich</div><div class="nm">Petra Kohler</div><div class="dt">✱ 21.06.1962</div><div class="note">Schwester von Barbara. Kinder: Antonia, Maximilian und Korbinian Ettner. Trägt viele der Familiendaten zusammen.</div></div>
+        <div class="person live" id="p-martin"><div class="rl">Onkel · mütterlich</div><div class="nm">Martin Kohler</div><div class="dt">✱ 12.03.1967</div><div class="note">Bruder von Barbara.</div></div>
+        <div class="person live" id="p-ellen"><div class="rl">Tante · väterlich</div><div class="nm">Eleonore „Ellen" Bajog, geb. Schönbach</div><div class="dt">✱ 16.09.1961</div><div class="note">Schwester von Ulrich, wohnt in Türkenfeld.</div></div>
       </div>
     </div>
 
     <div class="gen">
       <div class="gen-title">Cousinen & Cousins</div>
       <div class="cards">
-        <div class="person live" id="p-sandra"><div class="rl">väterlich · Kind von Ellen</div><div class="nm">Sandra Scharf, geb. Bajog</div><div class="note">Wohnt in Türkenfeld.</div></div>
-        <div class="person live" id="p-alex"><div class="rl">väterlich · Kind von Ellen</div><div class="nm">Alexander Bajog</div><div class="note">Wohnt in Türkenfeld.</div></div>
-        <div class="person live" id="p-antonia"><div class="rl">mütterlich · Kind von Petra</div><div class="nm">Antonia Ettner</div><div class="note">Die Älteste der drei. Trägt heute möglicherweise einen anderen (Ehe-)Namen — noch zu bestätigen.</div></div>
-        <div class="person live" id="p-maxi"><div class="rl">mütterlich · Kind von Petra</div><div class="nm">Maximilian Ettner</div></div>
-        <div class="person live" id="p-corbinian"><div class="rl">mütterlich · Kind von Petra</div><div class="nm">Corbinian Ettner</div></div>
+        <div class="person live" id="p-sandra"><div class="rl">väterlich · Kind von Ellen</div><div class="nm">Sandra Scharf, geb. Bajog</div><div class="dt">✱ 19.03.1993</div><div class="note">Wohnt in Türkenfeld.</div></div>
+        <div class="person live" id="p-alex"><div class="rl">väterlich · Kind von Ellen</div><div class="nm">Alexander Bajog</div><div class="dt">✱ 15.09.1986</div><div class="note">Wohnt in Türkenfeld.</div></div>
+        <div class="person live" id="p-antonia"><div class="rl">mütterlich · Kind von Petra</div><div class="nm">Antonia Ettner</div><div class="dt">✱ 23.07.1990</div><div class="note">Die Älteste der drei. Trägt heute möglicherweise einen anderen (Ehe-)Namen — noch zu bestätigen.</div></div>
+        <div class="person live" id="p-maxi"><div class="rl">mütterlich · Kind von Petra</div><div class="nm">Maximilian Ettner</div><div class="dt">✱ 10.03.1992</div></div>
+        <div class="person live" id="p-corbinian"><div class="rl">mütterlich · Kind von Petra</div><div class="nm">Korbinian Ettner</div><div class="dt">✱ 03.07.1995</div></div>
       </div>
     </div>
 
@@ -298,6 +302,7 @@ graph TD
         <div class="person mat" id="p-fritzk"><div class="rl">Großvater · mütterlich</div><div class="nm">Fritz Kohler</div><div class="dt">✱ 02.06.1933 · † 12.05.2025</div><span class="pl">Landsberg am Lech</span></div>
         <div class="person mat" id="p-ingrid"><div class="rl">Großmutter · mütterlich</div><div class="nm">Ingrid Kohler, geb. Wenger</div><div class="dt">✱ 25.06.1933 · † 04.04.2018</div></div>
         <div class="person mat" id="p-wolfgang"><div class="rl">Großonkel</div><div class="nm">Wolfgang Wenger</div><div class="dt">✱ 20.07.1936 · † 13.11.1962</div><div class="note">Bruder von Ingrid. Tödlich verunglückt bei einem Autounfall auf der alten B17 zwischen Kaufering und Hurlach.</div></div>
+        <div class="person mat" id="p-elfie"><div class="rl">Großtante · Schwester von Fritz Kohler</div><div class="nm">Elfriede „Elfie / Awili" Kohler</div><div class="dt">✱ 29.04.1930 · † 25.09. (Jahr noch zu klären)</div><div class="note">Tochter von Friedrich Kohler sen. &amp; Frieda Barth, Schwester von Fritz Kohler.</div></div>
       </div>
     </div>
 
@@ -366,6 +371,18 @@ graph TD
       <li><b>Familie Stoiber.</b><span class="meta">Berta & Xaver Stoiber liegen im Kohler-Familiengrab. Verwandtschaftliches Verhältnis ungeklärt.</span></li>
       <li><b>Pruy- und Reiser-Linien, Herkunftsort „Polsau".</b><span class="meta">Die Eltern von Anton Pruy und der Herkunftsort von Maria Reiser („Polsau", noch nicht lokalisiert) sind offen — über die Purschauer Kirchenbücher weiter zu verfolgen.</span></li>
     </ul>
+
+    <div style="margin-top:20px;padding:18px 22px;background:#efe7d8;border:1px dashed var(--rule);border-radius:11px">
+      <div style="font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:#7a6442;margin-bottom:8px">Älteste Spuren · aus fremden Stammbäumen / Indexen · NICHT durch Kirchenbücher bestätigt</div>
+      <p style="margin:0 0 12px;color:var(--soft);font-size:.9rem">So weit reichen die Online-Hinweise bisher zurück (teils ins 18. Jahrhundert). Diese Personen sind <b>noch nicht</b> über Originalquellen mit unserer Linie verbunden — sie zeigen nur, in welche Familien es weitergeht. Bestätigung nur über die Kirchenbücher der Pfarrei Purschau möglich.</p>
+      <div style="font-size:.92rem;color:var(--ink);line-height:1.65">
+        <b>Schönbach · Gochelmühle Nr. 55 (Petlarn)</b><br>
+        Ignaz Schönbach ∞ Theresia Nahrhaft — Kind geboren 1.10.1867 auf der Gochlmühle (Quelle: Tachauer „Leininger"-Stammbaum). Vermutlich Eltern/Großeltern von Ignaz Karl Schönbach.
+        <div style="height:12px"></div>
+        <b>Günther / Güntner · Bauern in Petlarn (Häuser Nr. 6 & 14)</b><br>
+        belegt seit 1744. Im Trauungsmatrikel Petlarn von 1842: Johann Güntner (Bauer in Petlarn) ∞ Elisabeth Eckert (aus Wosant Nr. 1), deren Mutter Katharina Güntner (um 1793). Vermutlich frühere Verwandte von Anna Pruy, geb. Günther (1889).
+      </div>
+    </div>
 
     <div class="todo">
       <h3 class="serif">Nächste Schritte</h3>
