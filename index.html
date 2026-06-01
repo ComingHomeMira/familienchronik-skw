@@ -178,6 +178,12 @@ graph TD
   MAR["Martin Kohler"]:::live
   L["Lennard Schönbach<br/>✱ 18.06.1997 Landsberg a.L."]:::live
   LE["Leonie Schönbach<br/>✱ 08.02.2000 Landsberg a.L."]:::live
+  ELLEN["Ellen Bajog, geb. Schönbach<br/>Türkenfeld"]:::live
+  SAN["Sandra Scharf, geb. Bajog"]:::live
+  ALEX["Alexander Bajog"]:::live
+  ANT["Antonia Ettner"]:::live
+  MAXI["Maximilian Ettner"]:::live
+  CORB["Corbinian Ettner"]:::live
 
   FRRE --> MRE
   SURE --> MRE
@@ -189,6 +195,10 @@ graph TD
   ASP --> AS
   AS --> US
   ER --> US
+  AS --> ELLEN
+  ER --> ELLEN
+  ELLEN --> SAN
+  ELLEN --> ALEX
   FKS --> FK
   FRK --> FK
   FW --> IK
@@ -199,6 +209,9 @@ graph TD
   IK --> BK
   FK --> PET
   IK --> PET
+  PET --> ANT
+  PET --> MAXI
+  PET --> CORB
   FK --> MAR
   IK --> MAR
   US --> L
@@ -229,6 +242,12 @@ graph TD
   click MAR call jumpTo("p-martin")
   click L call jumpTo("p-lennard")
   click LE call jumpTo("p-leonie")
+  click ELLEN call jumpTo("p-ellen")
+  click SAN call jumpTo("p-sandra")
+  click ALEX call jumpTo("p-alex")
+  click ANT call jumpTo("p-antonia")
+  click MAXI call jumpTo("p-maxi")
+  click CORB call jumpTo("p-corbinian")
 </pre>
       </div>
     </div>
@@ -241,14 +260,26 @@ graph TD
     <h2 class="serif">Die Personen</h2>
 
     <div class="gen">
-      <div class="gen-title">Ich & meine Eltern</div>
+      <div class="gen-title">Ich, Eltern, Tanten & Onkel</div>
       <div class="cards">
         <div class="person live" id="p-lennard"><div class="rl">Proband</div><div class="nm">Lennard Schönbach</div><div class="dt">✱ 18.06.1997 · Landsberg am Lech</div></div>
         <div class="person live" id="p-leonie"><div class="rl">Schwester</div><div class="nm">Leonie Schönbach</div><div class="dt">✱ 08.02.2000 · Landsberg am Lech</div></div>
         <div class="person live" id="p-ulrich"><div class="rl">Vater</div><div class="nm">Ulrich Schönbach</div><div class="dt">✱ 10.09.1966 · Fürstenfeldbruck</div></div>
         <div class="person live" id="p-barbara"><div class="rl">Mutter</div><div class="nm">Barbara Schönbach, geb. Kohler</div><div class="dt">✱ 25.02.1964</div></div>
-        <div class="person live" id="p-petra"><div class="rl">Tante</div><div class="nm">Petra Kohler</div><div class="note">Schwester von Barbara. Trägt viele der Familiendaten zusammen.</div></div>
-        <div class="person live" id="p-martin"><div class="rl">Onkel</div><div class="nm">Martin Kohler</div><div class="note">Bruder von Barbara.</div></div>
+        <div class="person live" id="p-petra"><div class="rl">Tante · mütterlich</div><div class="nm">Petra Kohler</div><div class="note">Schwester von Barbara. Kinder: Antonia, Maximilian und Corbinian Ettner. Trägt viele der Familiendaten zusammen.</div></div>
+        <div class="person live" id="p-martin"><div class="rl">Onkel · mütterlich</div><div class="nm">Martin Kohler</div><div class="note">Bruder von Barbara.</div></div>
+        <div class="person live" id="p-ellen"><div class="rl">Tante · väterlich</div><div class="nm">Ellen Bajog, geb. Schönbach</div><div class="note">Schwester von Ulrich, wohnt in Türkenfeld. Vollständiger Vorname vermutlich Eleonore (in der Familie zu bestätigen).</div></div>
+      </div>
+    </div>
+
+    <div class="gen">
+      <div class="gen-title">Cousinen & Cousins</div>
+      <div class="cards">
+        <div class="person live" id="p-sandra"><div class="rl">väterlich · Kind von Ellen</div><div class="nm">Sandra Scharf, geb. Bajog</div><div class="note">Wohnt in Türkenfeld.</div></div>
+        <div class="person live" id="p-alex"><div class="rl">väterlich · Kind von Ellen</div><div class="nm">Alexander Bajog</div><div class="note">Wohnt in Türkenfeld.</div></div>
+        <div class="person live" id="p-antonia"><div class="rl">mütterlich · Kind von Petra</div><div class="nm">Antonia Ettner</div><div class="note">Die Älteste der drei. Trägt heute möglicherweise einen anderen (Ehe-)Namen — noch zu bestätigen.</div></div>
+        <div class="person live" id="p-maxi"><div class="rl">mütterlich · Kind von Petra</div><div class="nm">Maximilian Ettner</div></div>
+        <div class="person live" id="p-corbinian"><div class="rl">mütterlich · Kind von Petra</div><div class="nm">Corbinian Ettner</div></div>
       </div>
     </div>
 
