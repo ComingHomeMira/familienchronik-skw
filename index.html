@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Familienchronik Schönbach · Kohler · Wenger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.js"></script>
+<style>
+  :root{
+    --bg:#f5efe4; --card:#fffdf8; --cream:#fbf6ec;
+    --ink:#241b14; --soft:#5c4c3c; --faint:#8a7860;
+    --rule:#d8c8a8; --wine:#6b1d2c; --green:#3b5c3a; --gold:#a87832; --blue:#2c4a72;
+    --shadow:0 1px 0 rgba(0,0,0,.03), 0 10px 26px -16px rgba(60,40,20,.30);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .serif{font-family:'Cormorant Garamond',Georgia,serif}
+  h1,h2,h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;margin:0}
+  h1{font-size:clamp(2.1rem,4.5vw,3.2rem);line-height:1.05}
+  h2{font-size:clamp(1.5rem,3vw,2.1rem);color:var(--wine);margin-bottom:.3em}
+  h3{font-size:1.2rem}
+  a{color:var(--wine)}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+  .rule{height:1px;background:linear-gradient(90deg,transparent,var(--rule),transparent);margin:52px 0}
+  .eyebrow{font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;color:var(--faint)}
+
+  /* header */
+  header{padding:54px 0 8px;text-align:center}
+  header h1{margin:14px 0 6px}
+  header .names{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--wine);letter-spacing:.04em}
+  header .sub{color:var(--soft);max-width:60ch;margin:18px auto 0;font-size:1.02rem}
+  header .stand{margin-top:16px;font-size:.8rem;color:var(--faint);letter-spacing:.04em}
+
+  /* legend */
+  .legend{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin:22px 0 10px;font-size:.82rem;color:var(--soft)}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .dot{width:13px;height:13px;border-radius:3px;border:1px solid}
+  .dot.pat{background:#e4efe1;border-color:#6f9a6a}
+  .dot.mat{background:#f6e7e3;border-color:#b3776f}
+  .dot.live{background:#e0e9f5;border-color:#6b87ad}
+
+  /* tree */
+  .tree-shell{position:relative}
+  .mermaid-frame{background:var(--cream);border:1px solid var(--rule);border-radius:14px;height:min(80vh,860px);overflow:hidden;position:relative;box-shadow:var(--shadow)}
+  .mermaid-frame.full{position:fixed;inset:18px;height:auto;z-index:999;box-shadow:0 30px 80px -20px rgba(40,20,10,.5)}
+  .mermaid-frame .mermaid{width:100%;height:100%}
+  .mermaid-frame .mermaid svg{width:100%!important;height:100%!important;max-width:none!important;cursor:grab}
+  .mermaid-frame .mermaid svg:active{cursor:grabbing}
+  .mermaid-frame .mermaid svg g.node{cursor:pointer}
+  .mermaid-frame .mermaid svg g.node:hover rect{filter:brightness(1.04) drop-shadow(0 2px 6px rgba(0,0,0,.15))}
+  .ctrl{position:absolute;top:13px;right:13px;display:flex;gap:5px;z-index:5;background:rgba(251,246,236,.92);border:1px solid var(--rule);border-radius:10px;padding:5px;box-shadow:var(--shadow)}
+  .ctrl button{width:33px;height:33px;border:0;border-radius:7px;background:transparent;color:var(--ink);cursor:pointer;font-family:'Cormorant Garamond',serif;font-size:1.15rem;display:flex;align-items:center;justify-content:center}
+  .ctrl button:hover{background:var(--bg)}
+  .ctrl button.w{width:auto;padding:0 11px;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;font-family:'Inter',sans-serif}
+  .hint{position:absolute;bottom:13px;left:13px;z-index:5;background:rgba(251,246,236,.85);border:1px solid var(--rule);border-radius:8px;padding:5px 11px;font-size:.76rem;color:var(--soft);pointer-events:none}
+
+  /* generation blocks */
+  .gen{margin-top:30px}
+  .gen-title{font-size:.78rem;letter-spacing:.24em;text-transform:uppercase;color:var(--wine);margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid var(--rule)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:14px}
+  .person{background:var(--card);border:1px solid var(--rule);border-radius:11px;padding:16px 18px;box-shadow:var(--shadow);scroll-margin-top:20px}
+  .person.pat{border-left:3px solid #6f9a6a}
+  .person.mat{border-left:3px solid #b3776f}
+  .person.live{border-left:3px solid #6b87ad}
+  .person .nm{font-family:'Cormorant Garamond',serif;font-size:1.3rem;line-height:1.15}
+  .person .rl{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);margin-bottom:5px}
+  .person .dt{font-size:.9rem;color:var(--soft);font-variant-numeric:tabular-nums;margin-top:3px}
+  .person .note{font-size:.88rem;color:var(--soft);margin-top:8px}
+  .person .pl{display:inline-block;margin-top:8px;font-size:.74rem;color:var(--green);background:#eaf1e7;border:1px solid #cfe0c9;border-radius:999px;padding:2px 9px}
+
+  /* places */
+  .places{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .place{background:var(--card);border:1px solid var(--rule);border-radius:11px;padding:18px;box-shadow:var(--shadow)}
+  .place .loc{font-family:'Cormorant Garamond',serif;font-size:1.35rem;color:var(--ink)}
+  .place .reg{font-size:.8rem;color:var(--faint);margin:3px 0 9px;letter-spacing:.03em}
+  .place .fam{font-size:.9rem;color:var(--soft)}
+  .place .fam b{color:var(--wine);font-weight:600}
+
+  /* map */
+  .mapwrap{border:1px solid var(--rule);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:14px}
+  #fammap{height:560px;width:100%;background:#e9eef0}
+  @media (max-width:600px){#fammap{height:420px}}
+  .maplbl{background:rgba(255,253,248,.93);border:1px solid var(--rule);border-radius:6px;padding:1px 7px;font-family:'Inter',sans-serif;font-size:12px;color:#241b14;font-weight:500;box-shadow:0 1px 4px rgba(0,0,0,.12);white-space:nowrap}
+  .maplbl.lbl-big{font-size:13px;font-weight:600;color:var(--wine)}
+  .maplbl::before{display:none!important}
+  .leaflet-container{font-family:'Inter',sans-serif}
+  .mapcap{font-size:.82rem;color:var(--faint);margin:0 0 24px;text-align:center;line-height:1.5}
+
+  /* research / open */
+  .open{background:#f0e9dc;border:1px solid var(--rule);border-radius:14px;padding:28px 30px}
+  .open h2{color:var(--soft)}
+  .open .tag{display:inline-block;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;background:#e6dcc8;color:#7a6442;border:1px solid #d3c2a0;border-radius:999px;padding:2px 9px;margin-bottom:10px}
+  .open ul{margin:0;padding-left:0;list-style:none}
+  .open li{padding:11px 0;border-bottom:1px dashed var(--rule)}
+  .open li:last-child{border-bottom:0}
+  .open li b{color:var(--ink)}
+  .open li .meta{font-size:.82rem;color:var(--faint);display:block;margin-top:2px}
+  .todo{margin-top:20px;background:var(--cream);border:1px solid var(--rule);border-radius:11px;padding:18px 22px}
+  .todo h3{color:var(--wine);margin-bottom:10px}
+  .todo ol{margin:0;padding-left:20px;color:var(--soft);font-size:.92rem;line-height:1.7}
+  .todo .free{color:var(--green);font-weight:600}
+
+  footer{padding:46px 0 60px;text-align:center;color:var(--faint);font-size:.85rem}
+  .orn{text-align:center;color:var(--gold);letter-spacing:.8em;margin:8px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Familienchronik</div>
+    <h1 class="serif">Schönbach · Kohler · Wenger</h1>
+    <div class="names">Woher wir kommen — zwei Linien, von Westböhmen bis Niederbayern</div>
+    <p class="sub">Eine Sammlung der gesicherten Familiendaten. Auf dieser Seite steht nur, was durch Grabsteine, Familienunterlagen oder Auskünfte aus der Familie belegt ist. Vermutungen und noch offene Spuren sind am Ende klar als solche gekennzeichnet.</p>
+    <div class="stand">Stand: 1. Juni 2026</div>
+  </header>
+
+  <div class="orn">✦ ✦ ✦</div>
+
+  <!-- TREE -->
+  <section>
+    <h2 class="serif">Der Stammbaum</h2>
+    <div class="legend">
+      <span><i class="dot pat"></i> Väterliche Linie (Schönbach, Petlarn/Tachau)</span>
+      <span><i class="dot mat"></i> Mütterliche Linie (Kohler · Wenger)</span>
+      <span><i class="dot live"></i> Lebende Familie</span>
+    </div>
+    <div class="tree-shell">
+      <div class="mermaid-frame" id="treeFrame">
+        <div class="ctrl">
+          <button onclick="tz.zoomIn()" title="Größer">+</button>
+          <button onclick="tz.zoomOut()" title="Kleiner">−</button>
+          <button onclick="tz.resetZoom();tz.center();tz.fit()" title="Zurücksetzen">↺</button>
+          <button class="w" onclick="toggleFull()">Vollbild</button>
+        </div>
+        <div class="hint">Ziehen zum Verschieben · Mausrad zum Zoomen · Klick auf eine Person springt zur Karte</div>
+<pre class="mermaid">
+%%{init: {'theme':'base','themeVariables':{'fontFamily':'Cormorant Garamond, Georgia, serif','fontSize':'14px','primaryColor':'#fbf6ec','primaryTextColor':'#241b14','primaryBorderColor':'#d8c8a8','lineColor':'#b09a6a'}}}%%
+graph TD
+  classDef pat fill:#e7f0e3,stroke:#6f9a6a,color:#1f2f1d
+  classDef mat fill:#f6e7e3,stroke:#b3776f,color:#3a1c1c
+  classDef live fill:#e2ebf6,stroke:#6b87ad,color:#1f3354
+
+  FRRE["Franz Reiser"]:::pat
+  SURE["Susanna Reiser, geb. Thent (?)"]:::pat
+  IKS["Ignaz Karl Schönbach<br/>Petlarn · Gochelmühle"]:::pat
+  MRE["Maria Schönbach, geb. Reiser<br/>aus Polsau"]:::pat
+  ANP["Anton Pruy<br/>✱ 1882 · † 02.11.1951"]:::pat
+  ANG["Anna Pruy, geb. Günther<br/>✱ 1880 · † 29.05.1964"]:::pat
+
+  FS["Franz Schönbach<br/>✱ 08.01.1912 · † 25.04.1945"]:::pat
+  ASP["Anna Schönbach, geb. Pruy<br/>✱ 27.01.1912 · † 28.08.1986"]:::pat
+  AS["Alfred Schönbach<br/>Petlarn → Bayern (1946 vertrieben)"]:::pat
+  ER["Erna Schönbach, geb. Steber<br/>Türkenfeld"]:::pat
+
+  FKS["Friedrich Kohler sen.<br/>✱ 09.04.1899 Velden a.d.Vils<br/>† 07.08.1979"]:::mat
+  FRK["Frieda Kohler, geb. Barth<br/>✱ 03.05.1909 Wurmannsquick<br/>† 04.11.1966"]:::mat
+  FW["Dr. Friedrich „Fritz“ Wenger<br/>✱ 24.10.1902 Marburg · † 04.01.1977<br/>Dipl.-Chemiker · BASF-Prokurist"]:::mat
+  HW["Johanna „Hanni“ Wenger, geb. Maar<br/>✱ 04.08.1904 Essen · † 21.03.1969"]:::mat
+  WW["Wolfgang Wenger<br/>✱ 20.07.1936 · † 13.11.1962"]:::mat
+
+  FK["Fritz Kohler<br/>✱ 02.06.1933 Landsberg a.L.<br/>† 12.05.2025"]:::mat
+  IK["Ingrid Kohler, geb. Wenger<br/>✱ 25.06.1933 · † 04.04.2018"]:::mat
+
+  US["Ulrich Schönbach<br/>✱ 10.09.1966 Fürstenfeldbruck"]:::live
+  BK["Barbara Schönbach, geb. Kohler<br/>✱ 25.02.1964"]:::live
+  PET["Petra Kohler"]:::live
+  MAR["Martin Kohler"]:::live
+  L["Lennard Schönbach"]:::live
+  LE["Leonie Schönbach"]:::live
+
+  FRRE --> MRE
+  SURE --> MRE
+  IKS --> FS
+  MRE --> FS
+  ANP --> ASP
+  ANG --> ASP
+  FS --> AS
+  ASP --> AS
+  AS --> US
+  ER --> US
+  FKS --> FK
+  FRK --> FK
+  FW --> IK
+  HW --> IK
+  FW --> WW
+  HW --> WW
+  FK --> BK
+  IK --> BK
+  FK --> PET
+  IK --> PET
+  FK --> MAR
+  IK --> MAR
+  US --> L
+  BK --> L
+  US --> LE
+  BK --> LE
+
+  click FRRE call jumpTo("p-franz-r")
+  click SURE call jumpTo("p-susanna-r")
+  click IKS call jumpTo("p-iks")
+  click MRE call jumpTo("p-maria-r")
+  click ANP call jumpTo("p-anton-p")
+  click ANG call jumpTo("p-anna-g")
+  click FS call jumpTo("p-franz-s")
+  click ASP call jumpTo("p-anna-s")
+  click AS call jumpTo("p-alfred")
+  click ER call jumpTo("p-erna")
+  click FKS call jumpTo("p-fksen")
+  click FRK call jumpTo("p-frieda")
+  click FW call jumpTo("p-fritzw")
+  click HW call jumpTo("p-hanni")
+  click WW call jumpTo("p-wolfgang")
+  click FK call jumpTo("p-fritzk")
+  click IK call jumpTo("p-ingrid")
+  click US call jumpTo("p-ulrich")
+  click BK call jumpTo("p-barbara")
+  click PET call jumpTo("p-petra")
+  click MAR call jumpTo("p-martin")
+  click L call jumpTo("p-lennard")
+  click LE call jumpTo("p-leonie")
+</pre>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- PEOPLE -->
+  <section>
+    <h2 class="serif">Die Personen</h2>
+
+    <div class="gen">
+      <div class="gen-title">Ich & meine Eltern</div>
+      <div class="cards">
+        <div class="person live" id="p-lennard"><div class="rl">Proband</div><div class="nm">Lennard Schönbach</div></div>
+        <div class="person live" id="p-leonie"><div class="rl">Schwester</div><div class="nm">Leonie Schönbach</div></div>
+        <div class="person live" id="p-ulrich"><div class="rl">Vater</div><div class="nm">Ulrich Schönbach</div><div class="dt">✱ 10.09.1966 · Fürstenfeldbruck</div></div>
+        <div class="person live" id="p-barbara"><div class="rl">Mutter</div><div class="nm">Barbara Schönbach, geb. Kohler</div><div class="dt">✱ 25.02.1964</div></div>
+        <div class="person live" id="p-petra"><div class="rl">Tante</div><div class="nm">Petra Kohler</div><div class="note">Schwester von Barbara. Trägt viele der Familiendaten zusammen.</div></div>
+        <div class="person live" id="p-martin"><div class="rl">Onkel</div><div class="nm">Martin Kohler</div><div class="note">Bruder von Barbara.</div></div>
+      </div>
+    </div>
+
+    <div class="gen">
+      <div class="gen-title">Großeltern</div>
+      <div class="cards">
+        <div class="person pat" id="p-alfred"><div class="rl">Großvater · väterlich</div><div class="nm">Alfred Schönbach</div><div class="note">Wuchs in Petlarn auf der Gochelmühle auf, 1946 als Kind vertrieben, danach in Bayern.</div><span class="pl">Petlarn / Gochelmühle</span></div>
+        <div class="person pat" id="p-erna"><div class="rl">Großmutter · väterlich</div><div class="nm">Erna Schönbach, geb. Steber</div><div class="note">Lebte ihr Leben lang in Türkenfeld.</div><span class="pl">Türkenfeld</span></div>
+        <div class="person mat" id="p-fritzk"><div class="rl">Großvater · mütterlich</div><div class="nm">Fritz Kohler</div><div class="dt">✱ 02.06.1933 · † 12.05.2025</div><span class="pl">Landsberg am Lech</span></div>
+        <div class="person mat" id="p-ingrid"><div class="rl">Großmutter · mütterlich</div><div class="nm">Ingrid Kohler, geb. Wenger</div><div class="dt">✱ 25.06.1933 · † 04.04.2018</div></div>
+        <div class="person mat" id="p-wolfgang"><div class="rl">Großonkel</div><div class="nm">Wolfgang Wenger</div><div class="dt">✱ 20.07.1936 · † 13.11.1962</div><div class="note">Bruder von Ingrid. Tödlich verunglückt bei einem Autounfall auf der alten B17 zwischen Kaufering und Hurlach.</div></div>
+      </div>
+    </div>
+
+    <div class="gen">
+      <div class="gen-title">Urgroßeltern</div>
+      <div class="cards">
+        <div class="person pat" id="p-franz-s"><div class="rl">Urgroßvater · Vater von Alfred</div><div class="nm">Franz Schönbach</div><div class="dt">✱ 08.01.1912 · † 25.04.1945</div><div class="note">Aus Petlarn / Gochelmühle. Gestorben wenige Tage vor Kriegsende.</div></div>
+        <div class="person pat" id="p-anna-s"><div class="rl">Urgroßmutter · Mutter von Alfred</div><div class="nm">Anna Schönbach, geb. Pruy</div><div class="dt">✱ 27.01.1912 · † 28.08.1986</div></div>
+        <div class="person mat" id="p-fksen"><div class="rl">Urgroßvater · Vater von Fritz Kohler</div><div class="nm">Friedrich Kohler sen.</div><div class="dt">✱ 09.04.1899 · † 07.08.1979</div><span class="pl">Velden an der Vils</span></div>
+        <div class="person mat" id="p-frieda"><div class="rl">Urgroßmutter · Mutter von Fritz Kohler</div><div class="nm">Frieda Kohler, geb. Barth</div><div class="dt">✱ 03.05.1909 · † 04.11.1966</div><span class="pl">Wurmannsquick</span></div>
+        <div class="person mat" id="p-fritzw"><div class="rl">Urgroßvater · Vater von Ingrid</div><div class="nm">Dr. Friedrich „Fritz" Wenger</div><div class="dt">✱ 24.10.1902 · † 04.01.1977</div><div class="note">Diplom-Chemiker. Prokurist bei der BASF, zuständig für den weltweiten Rohstoffeinkauf.</div><span class="pl">Marburg</span></div>
+        <div class="person mat" id="p-hanni"><div class="rl">Urgroßmutter · Mutter von Ingrid</div><div class="nm">Johanna „Hanni" Wenger, geb. Maar</div><div class="dt">✱ 04.08.1904 · † 21.03.1969</div><span class="pl">Essen</span></div>
+      </div>
+    </div>
+
+    <div class="gen">
+      <div class="gen-title">Ältere Generationen · Petlarn / Tachau (Westböhmen)</div>
+      <div class="cards">
+        <div class="person pat" id="p-iks"><div class="rl">Ur-Ur-Großvater · Vater von Franz</div><div class="nm">Ignaz Karl Schönbach</div><div class="note">Aus Petlarn (Gochelmühle).</div></div>
+        <div class="person pat" id="p-maria-r"><div class="rl">Ur-Ur-Großmutter · Mutter von Franz</div><div class="nm">Maria Schönbach, geb. Reiser</div><div class="note">Aus Polsau.</div></div>
+        <div class="person pat" id="p-anton-p"><div class="rl">Ur-Ur-Großvater · Vater von Anna</div><div class="nm">Anton Pruy</div><div class="dt">✱ 1882 · † 02.11.1951</div></div>
+        <div class="person pat" id="p-anna-g"><div class="rl">Ur-Ur-Großmutter · Mutter von Anna</div><div class="nm">Anna Pruy, geb. Günther</div><div class="dt">✱ 1880 · † 29.05.1964</div></div>
+        <div class="person pat" id="p-franz-r"><div class="rl">3×-Urgroßvater · Vater von Maria</div><div class="nm">Franz Reiser</div></div>
+        <div class="person pat" id="p-susanna-r"><div class="rl">3×-Urgroßmutter · Mutter von Maria</div><div class="nm">Susanna Reiser, geb. Thent (?)</div><div class="note">Schreibweise des Mädchennamens noch unsicher.</div></div>
+      </div>
+    </div>
+
+    <p style="font-size:.85rem;color:var(--faint);margin-top:18px">Ebenfalls im Familiengrab in Landsberg am Lech bestattet: <b>Berta Stoiber</b> (✱ 23.04.1906 · † 05.10.1981) und <b>Xaver Stoiber</b> (✱ 31.07.1908 · † 08.02.1995). Ihr verwandtschaftliches Verhältnis zur Familie Kohler ist noch nicht geklärt.</p>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- PLACES -->
+  <section>
+    <h2 class="serif">Woher die Familie kommt</h2>
+    <p style="color:var(--soft);max-width:62ch;margin-top:0">Acht Herkunftsorte aus vier Regionen fließen in dieser Familie zusammen — die westböhmischen Sudetendeutschen der väterlichen Seite, die niederbayerischen und hessisch-rheinischen Wurzeln der mütterlichen Seite. Die Pfeile zeigen, wohin die Familien gezogen sind.</p>
+    <div class="mapwrap"><div id="fammap"></div></div>
+    <div class="mapcap">Grün = väterliche (sudetendeutsche) Linie · Weinrot = mütterliche Linie · Blau = Landsberg am Lech, wo beide Linien zusammenkamen.<br>Der große grüne Pfeil ist die Vertreibung aus Petlarn (Westböhmen) nach Bayern 1946. Zum Zoomen die +/−-Tasten nutzen.</div>
+    <div class="places">
+      <div class="place"><div class="loc">Petlarn / Gochelmühle</div><div class="reg">Tachau · Westböhmen → 1946 vertrieben</div><div class="fam"><b>Schönbach</b>, <b>Reiser</b> — die Mühle am Katharinabach, auf der mein Opa Alfred aufwuchs.</div></div>
+      <div class="place"><div class="loc">Raum Tachau</div><div class="reg">Hesselsdorf · Westböhmen</div><div class="fam"><b>Pruy</b>, <b>Günther</b> — die Familie von Urgroßmutter Anna.</div></div>
+      <div class="place"><div class="loc">Türkenfeld</div><div class="reg">Oberbayern · Lkr. Fürstenfeldbruck</div><div class="fam"><b>Steber</b> — Heimat von Großmutter Erna.</div></div>
+      <div class="place"><div class="loc">Velden an der Vils</div><div class="reg">Niederbayern · Lkr. Landshut</div><div class="fam"><b>Kohler</b> — Geburtsort von Friedrich Kohler sen.</div></div>
+      <div class="place"><div class="loc">Wurmannsquick</div><div class="reg">Niederbayern · Lkr. Rottal-Inn</div><div class="fam"><b>Barth</b> — Geburtsort von Frieda Kohler.</div></div>
+      <div class="place"><div class="loc">Marburg</div><div class="reg">Hessen</div><div class="fam"><b>Wenger</b> — Geburts- und Studienstadt von Dr. Friedrich Wenger.</div></div>
+      <div class="place"><div class="loc">Essen</div><div class="reg">Ruhrgebiet</div><div class="fam"><b>Maar</b> — Geburtsort von Johanna Wenger.</div></div>
+      <div class="place"><div class="loc">Landsberg am Lech</div><div class="reg">Oberbayern · Familiengrab</div><div class="fam">Wo die Kohler- und Wenger-Linie zusammenkamen.</div></div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- OPEN / RESEARCH -->
+  <section class="open">
+    <span class="tag">Noch nicht bestätigt</span>
+    <h2 class="serif">Offene Fragen & Forschungsspuren</h2>
+    <p style="color:var(--soft);max-width:64ch;margin-top:0">Das Folgende ist <b>nicht gesichert</b> — es sind Hinweise, Vermutungen und noch zu prüfende Spuren. Sie stehen hier getrennt, damit der Stammbaum oben nur Belegtes zeigt.</p>
+    <ul>
+      <li><b>Beruflicher Weg von Dr. Friedrich Wenger vor der BASF.</b><span class="meta">Vermutung (Familienüberlieferung): leitende Tätigkeit in der Chemieindustrie, Einsatz von Zwangsarbeitern, Flucht vor der Roten Armee 1945. Eine mögliche Station: das IG-Farben-Faserwerk (Perlon) in Landsberg an der Warthe. Noch nicht belegt. Die NS-Frage ist über das Bundesarchiv ergebnisoffen zu klären.</span></li>
+      <li><b>Dissertation Marburg 1928.</b><span class="meta">In der Deutschen Nationalbibliothek liegt eine chemische Dissertation „Fritz Wenger, Marburg 1928". Sehr wahrscheinlich von ihm (geboren in Marburg), aber die Identität ist noch nicht endgültig bestätigt.</span></li>
+      <li><b>Herkunft der Familie Maar.</b><span class="meta">Im Reichsanzeiger ist eine Marburger Kaufmannsfamilie Maar belegt (Carl & Louise Maar, 1902). Möglicherweise stammt Johanna Maar aus dieser Familie — das würde die Verbindung zweier Marburger Familien erklären. Unbestätigt.</span></li>
+      <li><b>Ältere Schönbach-Generation auf der Gochelmühle.</b><span class="meta">Ein Online-Hinweis nennt „Ignaz Schönbach ∞ Theresia Nahrhaft", Gochlmühle Nr. 55, Petlarn, um 1867 — möglicherweise die Eltern oder Großeltern von Ignaz Karl Schönbach. Über die Kirchenbücher (Porta fontium) zu prüfen.</span></li>
+      <li><b>Familie Stoiber.</b><span class="meta">Berta & Xaver Stoiber liegen im Kohler-Familiengrab. Verwandtschaftliches Verhältnis ungeklärt.</span></li>
+      <li><b>Todesumstände von Franz Schönbach († 25.04.1945).</b><span class="meta">Kurz vor Kriegsende. Mögliche Nennung auf der Gefallenen-Gedenkliste Petlarn/Brand zu prüfen.</span></li>
+    </ul>
+
+    <div class="todo">
+      <h3 class="serif">Nächste Schritte</h3>
+      <ol>
+        <li><span class="free">Kostenlos · im Browser:</span> Kirchenbücher der Pfarrei Purschau auf <b>Porta fontium</b> — Tauf-/Heiratseinträge Schönbach, Pruy, Reiser in Petlarn.</li>
+        <li><span class="free">Kostenlos · im Browser:</span> Matricula Online — Taufeinträge <b>Velden an der Vils</b> (Friedrich Kohler 1899), <b>Türkenfeld</b> (Steber), <b>Wurmannsquick</b> (Trauungen, da Taufbuch nur bis 1904).</li>
+        <li><span class="free">Kostenlos:</span> denkmalprojekt.org — Gefallenenliste Petlarn/Brand auf Franz Schönbach prüfen.</li>
+        <li>Bundesarchiv Bayreuth — Heimatortskartei Sudetendeutsche (Familie Schönbach, Petlarn; Vertreibungsweg).</li>
+        <li>Standesamt Landsberg am Lech — Sterbe- & Heiratsurkunden (Wenger/Kohler).</li>
+        <li>Standesamt Fürstenfeldbruck — Geburtsurkunde Ulrich 1966 (Daten von Alfred & Erna).</li>
+        <li>Standesamt Essen — Geburtsurkunde Johanna Maar 1904 (Eltern).</li>
+        <li>BASF-Konzernarchiv Ludwigshafen & Bundesarchiv Berlin — Werdegang und NS-Frage Dr. Friedrich Wenger.</li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>
+    <div class="orn">✦</div>
+    Familienchronik Schönbach · Kohler · Wenger — Stand 1. Juni 2026<br>
+    Alle Angaben im Stammbaum sind durch Grabsteine, Familienunterlagen oder Familienauskunft belegt. Die ausführliche Quellendokumentation liegt in den begleitenden Projektdateien.
+  </footer>
+
+</div>
+
+<script>
+  let tz = { zoomIn(){}, zoomOut(){}, resetZoom(){}, center(){}, fit(){}, resize(){} };
+
+  function jumpTo(id){
+    const el = document.getElementById(id);
+    if(!el) return;
+    const f = document.getElementById('treeFrame');
+    if(f.classList.contains('full')) toggleFull();
+    el.scrollIntoView({behavior:'smooth', block:'center'});
+    el.style.transition='box-shadow .3s, transform .3s';
+    el.style.boxShadow='0 0 0 3px var(--gold), 0 12px 30px -12px rgba(168,120,50,.55)';
+    el.style.transform='translateY(-2px)';
+    setTimeout(()=>{ el.style.boxShadow=''; el.style.transform=''; }, 1700);
+  }
+  function toggleFull(){
+    const f = document.getElementById('treeFrame');
+    f.classList.toggle('full');
+    setTimeout(()=>{ try{ tz.resize(); tz.fit(); tz.center(); }catch(e){} }, 250);
+  }
+
+  mermaid.initialize({ startOnLoad:false, securityLevel:'loose',
+    flowchart:{ useMaxWidth:false, htmlLabels:true, nodeSpacing:38, rankSpacing:64 } });
+
+  (async () => {
+    await mermaid.run({ querySelector:'.mermaid' });
+    const svg = document.querySelector('#treeFrame .mermaid svg');
+    if (svg && window.svgPanZoom){
+      svg.removeAttribute('style'); svg.style.width='100%'; svg.style.height='100%';
+      tz = svgPanZoom(svg, { zoomEnabled:true, controlIconsEnabled:false, fit:true, center:true,
+        minZoom:0.25, maxZoom:6, zoomScaleSensitivity:0.12, contain:false });
+      window.addEventListener('resize', ()=>{ tz.resize(); tz.fit(); tz.center(); });
+    }
+  })();
+
+  // ---- Herkunfts-/Wanderungskarte ----
+  (function(){
+    if(!window.L || !document.getElementById('fammap')) return;
+    const GREEN='#3b5c3a', WINE='#6b1d2c', BLUE='#2c4a72';
+    const map = L.map('fammap', { scrollWheelZoom:false, zoomControl:true, attributionControl:true })
+                 .setView([49.6, 11.2], 6);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution:'&copy; OpenStreetMap, &copy; CARTO', subdomains:'abcd', maxZoom:13
+    }).addTo(map);
+
+    const P = {
+      petlarn:[49.74,12.56], tuerkenfeld:[48.103,11.092],
+      velden:[48.366,12.256], wurmannsquick:[48.357,12.79],
+      marburg:[50.802,8.766], essen:[51.458,7.014], landsberg:[48.048,10.868]
+    };
+    const pts = [
+      {n:'Petlarn (bei Tachau)', c:P.petlarn, col:GREEN, dir:'right'},
+      {n:'Türkenfeld', c:P.tuerkenfeld, col:GREEN, dir:'left'},
+      {n:'Velden a. d. Vils', c:P.velden, col:WINE, dir:'left'},
+      {n:'Wurmannsquick', c:P.wurmannsquick, col:WINE, dir:'right'},
+      {n:'Marburg', c:P.marburg, col:WINE, dir:'top'},
+      {n:'Essen', c:P.essen, col:WINE, dir:'top'},
+      {n:'Landsberg am Lech', c:P.landsberg, col:BLUE, dir:'bottom', big:true}
+    ];
+
+    function arc(a,b,bend){
+      const c=[(a[0]+b[0])/2 + (b[1]-a[1])*bend, (a[1]+b[1])/2 - (b[0]-a[0])*bend];
+      const out=[], N=26;
+      for(let i=0;i<=N;i++){const t=i/N,u=1-t;
+        out.push([u*u*a[0]+2*u*t*c[0]+t*t*b[0], u*u*a[1]+2*u*t*c[1]+t*t*b[1]]);}
+      return out;
+    }
+    function arrow(a,b,col,bend,w){
+      const line=L.polyline(arc(a,b,bend),{color:col,weight:w||2.5,opacity:.7,lineCap:'round'}).addTo(map);
+      L.polylineDecorator(line,{patterns:[{offset:'100%',repeat:0,
+        symbol:L.Symbol.arrowHead({pixelSize:12,polygon:true,
+          pathOptions:{color:col,fillColor:col,fillOpacity:.85,weight:0}})}]}).addTo(map);
+    }
+
+    // Wanderungswege
+    arrow(P.petlarn, P.tuerkenfeld, GREEN, 0.12, 4);   // Vertreibung 1946
+    arrow(P.marburg, P.landsberg, WINE, 0.10, 2.5);    // Wenger
+    arrow(P.essen,  P.landsberg, WINE, 0.16, 2.5);     // Maar
+    arrow(P.velden, P.landsberg, WINE, -0.18, 2.5);    // Kohler
+    arrow(P.wurmannsquick, P.landsberg, WINE, 0.20, 2.5); // Barth
+
+    pts.forEach(p=>{
+      L.circleMarker(p.c,{radius:p.big?8:6,color:'#fff',weight:2,fillColor:p.col,fillOpacity:1})
+        .addTo(map)
+        .bindTooltip(p.n,{permanent:true,direction:p.dir||'top',
+          className:'maplbl'+(p.big?' lbl-big':''),offset:[0,0]});
+    });
+  })();
+</script>
+</body>
+</html>
