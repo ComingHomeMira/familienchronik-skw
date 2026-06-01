@@ -155,13 +155,15 @@ graph TD
   SURE["Susanna Reiser, geb. Thent (?)"]:::pat
   IKS["Ignaz Karl Schönbach<br/>Petlarn · Gochelmühle"]:::pat
   MRE["Maria Schönbach, geb. Reiser<br/>aus Polsau"]:::pat
-  ANP["Anton Pruy<br/>✱ 1882 · † 02.11.1951"]:::pat
-  ANG["Anna Pruy, geb. Günther<br/>✱ 1880 · † 29.05.1964"]:::pat
+  ANP["Anton Pruy<br/>✱ 1882 · † 1951"]:::pat
+  ANG["Anna Pruy, geb. Günther<br/>✱ 1889 · † 1964"]:::pat
 
-  FS["Franz Schönbach<br/>✱ 08.01.1912 · † 25.04.1945"]:::pat
+  FS["Franz Schönbach<br/>✱ 08.02.1912 · gefallen 25.04.1945"]:::pat
   ASP["Anna Schönbach, geb. Pruy<br/>✱ 27.01.1912 · † 28.08.1986"]:::pat
-  AS["Alfred Schönbach<br/>Petlarn → Bayern (1946 vertrieben)"]:::pat
-  ER["Erna Schönbach, geb. Steber<br/>Türkenfeld"]:::pat
+  PAULINE["Pauline Tendler, geb. Pruy<br/>✱ 1920 · † 2005"]:::pat
+  JOSEF["Josef Tendler<br/>✱ 1911 · † 1994"]:::pat
+  AS["Alfred Schönbach<br/>✱ 12.05.1934 Petlarn · † 07.06.1993<br/>1946 vertrieben → Bayern"]:::pat
+  ER["Erna Schönbach, geb. Steber<br/>✱ 30.10.1932 · † 07.02.2014<br/>Türkenfeld"]:::pat
 
   FKS["Friedrich Kohler sen.<br/>✱ 09.04.1899 Velden a.d.Vils<br/>† 07.08.1979"]:::mat
   FRK["Frieda Kohler, geb. Barth<br/>✱ 03.05.1909 Wurmannsquick<br/>† 04.11.1966"]:::mat
@@ -191,6 +193,9 @@ graph TD
   MRE --> FS
   ANP --> ASP
   ANG --> ASP
+  ANP --> PAULINE
+  ANG --> PAULINE
+  PAULINE -.- JOSEF
   FS --> AS
   ASP --> AS
   AS --> US
@@ -225,6 +230,8 @@ graph TD
   click MRE call jumpTo("p-maria-r")
   click ANP call jumpTo("p-anton-p")
   click ANG call jumpTo("p-anna-g")
+  click PAULINE call jumpTo("p-pauline")
+  click JOSEF call jumpTo("p-josef")
   click FS call jumpTo("p-franz-s")
   click ASP call jumpTo("p-anna-s")
   click AS call jumpTo("p-alfred")
@@ -286,8 +293,8 @@ graph TD
     <div class="gen">
       <div class="gen-title">Großeltern</div>
       <div class="cards">
-        <div class="person pat" id="p-alfred"><div class="rl">Großvater · väterlich</div><div class="nm">Alfred Schönbach</div><div class="note">Wuchs in Petlarn auf der Gochelmühle auf, 1946 als Kind vertrieben, danach in Bayern.</div><span class="pl">Petlarn / Gochelmühle</span></div>
-        <div class="person pat" id="p-erna"><div class="rl">Großmutter · väterlich</div><div class="nm">Erna Schönbach, geb. Steber</div><div class="note">Lebte ihr Leben lang in Türkenfeld.</div><span class="pl">Türkenfeld</span></div>
+        <div class="person pat" id="p-alfred"><div class="rl">Großvater · väterlich</div><div class="nm">Alfred Schönbach</div><div class="dt">✱ 12.05.1934 · † 07.06.1993</div><div class="note">Geboren in Petlarn auf der Gochelmühle, 1946 als Kind vertrieben, danach in Bayern (Türkenfeld).</div><span class="pl">Petlarn / Gochelmühle</span></div>
+        <div class="person pat" id="p-erna"><div class="rl">Großmutter · väterlich</div><div class="nm">Erna Schönbach, geb. Steber</div><div class="dt">✱ 30.10.1932 · † 07.02.2014</div><div class="note">Lebte ihr Leben lang in Türkenfeld.</div><span class="pl">Türkenfeld</span></div>
         <div class="person mat" id="p-fritzk"><div class="rl">Großvater · mütterlich</div><div class="nm">Fritz Kohler</div><div class="dt">✱ 02.06.1933 · † 12.05.2025</div><span class="pl">Landsberg am Lech</span></div>
         <div class="person mat" id="p-ingrid"><div class="rl">Großmutter · mütterlich</div><div class="nm">Ingrid Kohler, geb. Wenger</div><div class="dt">✱ 25.06.1933 · † 04.04.2018</div></div>
         <div class="person mat" id="p-wolfgang"><div class="rl">Großonkel</div><div class="nm">Wolfgang Wenger</div><div class="dt">✱ 20.07.1936 · † 13.11.1962</div><div class="note">Bruder von Ingrid. Tödlich verunglückt bei einem Autounfall auf der alten B17 zwischen Kaufering und Hurlach.</div></div>
@@ -297,7 +304,7 @@ graph TD
     <div class="gen">
       <div class="gen-title">Urgroßeltern</div>
       <div class="cards">
-        <div class="person pat" id="p-franz-s"><div class="rl">Urgroßvater · Vater von Alfred</div><div class="nm">Franz Schönbach</div><div class="dt">✱ 08.01.1912 · † 25.04.1945</div><div class="note">Aus Petlarn / Gochelmühle. Gestorben wenige Tage vor Kriegsende.</div></div>
+        <div class="person pat" id="p-franz-s"><div class="rl">Urgroßvater · Vater von Alfred</div><div class="nm">Franz Schönbach</div><div class="dt">✱ 08.02.1912 · gefallen 25.04.1945</div><div class="note">Aus Petlarn / Gochelmühle. Im Krieg gefallen, wenige Tage vor Kriegsende (Eisernes Kreuz auf dem Grabstein).</div></div>
         <div class="person pat" id="p-anna-s"><div class="rl">Urgroßmutter · Mutter von Alfred</div><div class="nm">Anna Schönbach, geb. Pruy</div><div class="dt">✱ 27.01.1912 · † 28.08.1986</div></div>
         <div class="person mat" id="p-fksen"><div class="rl">Urgroßvater · Vater von Fritz Kohler</div><div class="nm">Friedrich Kohler sen.</div><div class="dt">✱ 09.04.1899 · † 07.08.1979</div><span class="pl">Velden an der Vils</span></div>
         <div class="person mat" id="p-frieda"><div class="rl">Urgroßmutter · Mutter von Fritz Kohler</div><div class="nm">Frieda Kohler, geb. Barth</div><div class="dt">✱ 03.05.1909 · † 04.11.1966</div><span class="pl">Wurmannsquick</span></div>
@@ -311,8 +318,10 @@ graph TD
       <div class="cards">
         <div class="person pat" id="p-iks"><div class="rl">Ur-Ur-Großvater · Vater von Franz</div><div class="nm">Ignaz Karl Schönbach</div><div class="note">Aus Petlarn (Gochelmühle).</div></div>
         <div class="person pat" id="p-maria-r"><div class="rl">Ur-Ur-Großmutter · Mutter von Franz</div><div class="nm">Maria Schönbach, geb. Reiser</div><div class="note">Aus Polsau.</div></div>
-        <div class="person pat" id="p-anton-p"><div class="rl">Ur-Ur-Großvater · Vater von Anna</div><div class="nm">Anton Pruy</div><div class="dt">✱ 1882 · † 02.11.1951</div></div>
-        <div class="person pat" id="p-anna-g"><div class="rl">Ur-Ur-Großmutter · Mutter von Anna</div><div class="nm">Anna Pruy, geb. Günther</div><div class="dt">✱ 1880 · † 29.05.1964</div></div>
+        <div class="person pat" id="p-anton-p"><div class="rl">Ur-Ur-Großvater · Vater von Anna</div><div class="nm">Anton Pruy</div><div class="dt">✱ 1882 · † 1951</div></div>
+        <div class="person pat" id="p-anna-g"><div class="rl">Ur-Ur-Großmutter · Mutter von Anna</div><div class="nm">Anna Pruy, geb. Günther</div><div class="dt">✱ 1889 · † 1964</div></div>
+        <div class="person pat" id="p-pauline"><div class="rl">Großtante · Schwester von Anna Schönbach</div><div class="nm">Pauline Tendler, geb. Pruy</div><div class="dt">✱ 1920 · † 2005</div><div class="note">Geborene Pruy — mit hoher Wahrscheinlichkeit Tochter von Anton &amp; Anna Pruy (im selben Familiengrab).</div></div>
+        <div class="person pat" id="p-josef"><div class="rl">Mann von Pauline</div><div class="nm">Josef Tendler</div><div class="dt">✱ 1911 · † 1994</div></div>
         <div class="person pat" id="p-franz-r"><div class="rl">3×-Urgroßvater · Vater von Maria</div><div class="nm">Franz Reiser</div></div>
         <div class="person pat" id="p-susanna-r"><div class="rl">3×-Urgroßmutter · Mutter von Maria</div><div class="nm">Susanna Reiser, geb. Thent (?)</div><div class="note">Schreibweise des Mädchennamens noch unsicher.</div></div>
       </div>
