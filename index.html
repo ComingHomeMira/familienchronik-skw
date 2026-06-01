@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.js"></script>
+<script src="https://unpkg.com/hammerjs@2.0.8/hammer.min.js"></script>
 <style>
   :root{
     --bg:#f5efe4; --card:#fffdf8; --cream:#fbf6ec;
@@ -50,9 +51,10 @@
   /* tree */
   .tree-shell{position:relative}
   .mermaid-frame{background:var(--cream);border:1px solid var(--rule);border-radius:14px;height:min(80vh,860px);overflow:hidden;position:relative;box-shadow:var(--shadow)}
+  @media (max-width:600px){ .mermaid-frame{height:64vh} }
   .mermaid-frame.full{position:fixed;inset:18px;height:auto;z-index:999;box-shadow:0 30px 80px -20px rgba(40,20,10,.5)}
   .mermaid-frame .mermaid{width:100%;height:100%}
-  .mermaid-frame .mermaid svg{width:100%!important;height:100%!important;max-width:none!important;cursor:grab}
+  .mermaid-frame .mermaid svg{width:100%!important;height:100%!important;max-width:none!important;cursor:grab;touch-action:none}
   .mermaid-frame .mermaid svg:active{cursor:grabbing}
   .mermaid-frame .mermaid svg g.node{cursor:pointer}
   .mermaid-frame .mermaid svg g.node:hover rect{filter:brightness(1.04) drop-shadow(0 2px 6px rgba(0,0,0,.15))}
@@ -375,8 +377,31 @@ graph TD
     const svg = document.querySelector('#treeFrame .mermaid svg');
     if (svg && window.svgPanZoom){
       svg.removeAttribute('style'); svg.style.width='100%'; svg.style.height='100%';
+
+      // Touch-/Pinch-Unterstützung fürs Handy (svg-pan-zoom kann das nicht von allein)
+      const touchHandler = {
+        haltEventListeners:['touchstart','touchend','touchmove','touchleave','touchcancel'],
+        init:function(o){
+          if(!window.Hammer) return;
+          const inst=o.instance; let sx=0, sy=0, scale=1;
+          this.hammer=new Hammer(o.svgElement);
+          this.hammer.get('pinch').set({enable:true});
+          this.hammer.on('panstart panmove',function(e){
+            if(e.type==='panstart'){ sx=0; sy=0; }
+            inst.panBy({x:e.deltaX-sx, y:e.deltaY-sy}); sx=e.deltaX; sy=e.deltaY;
+          });
+          this.hammer.on('pinchstart pinchmove',function(e){
+            if(e.type==='pinchstart'){ scale=inst.getZoom(); }
+            inst.zoomAtPoint(scale*e.scale, {x:e.center.x, y:e.center.y});
+          });
+          o.svgElement.addEventListener('touchmove',function(e){ e.preventDefault(); }, {passive:false});
+        },
+        destroy:function(){ if(this.hammer) this.hammer.destroy(); }
+      };
+
       tz = svgPanZoom(svg, { zoomEnabled:true, controlIconsEnabled:false, fit:true, center:true,
-        minZoom:0.25, maxZoom:6, zoomScaleSensitivity:0.12, contain:false });
+        minZoom:0.25, maxZoom:6, zoomScaleSensitivity:0.12, contain:false,
+        customEventsHandler: touchHandler });
       window.addEventListener('resize', ()=>{ tz.resize(); tz.fit(); tz.center(); });
     }
   })();
