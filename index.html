@@ -150,6 +150,7 @@ graph TD
   classDef pat fill:#e7f0e3,stroke:#6f9a6a,color:#1f2f1d
   classDef mat fill:#f6e7e3,stroke:#b3776f,color:#3a1c1c
   classDef live fill:#e2ebf6,stroke:#6b87ad,color:#1f3354
+  classDef unk fill:#eeeae2,stroke:#b9ad97,color:#8a7d68,stroke-dasharray:4 3
 
   FRRE["Franz Reiser"]:::pat
   SURE["Susanna Reiser, geb. Thent (?)"]:::pat
@@ -163,7 +164,13 @@ graph TD
   PAULINE["Pauline Tendler, geb. Pruy<br/>✱ 1920 · † 2005"]:::pat
   JOSEF["Josef Tendler<br/>✱ 1911 · † 1994"]:::pat
   AS["Alfred Schönbach<br/>✱ 12.05.1934 Petlarn · † 07.06.1993<br/>1946 vertrieben → Bayern"]:::pat
+  GERL["Gerlinde Linsenmann,<br/>geb. Schönbach · ✱ 14.01.1933"]:::live
+  RAIN["Rainer Schönbach<br/>✱ 12.01.1938 Petlarn · † 25.08.2001"]:::pat
   ER["Erna Schönbach, geb. Steber<br/>✱ 30.10.1932 · † 07.02.2014<br/>Türkenfeld"]:::pat
+  STEB["Familie Steber · Türkenfeld<br/>(Eltern noch unbekannt)"]:::unk
+  ANNE["Anneliese Resch,<br/>geb. Steber · ✱ 25.12.1927 · † 07.04.1998"]:::pat
+  MARIAST["Maria Sieber,<br/>geb. Steber · ✱ 08.11.1930 · † 31.08.2007"]:::pat
+  HEDW["Hedwig Friede,<br/>geb. Steber · ✱ 18.12.1937"]:::pat
 
   FKS["Friedrich Kohler sen.<br/>✱ 09.04.1899 Velden a.d.Vils<br/>† 07.08.1979"]:::mat
   FRK["Frieda Kohler, geb. Barth<br/>✱ 03.05.1909 Wurmannsquick<br/>† 04.11.1966"]:::mat
@@ -172,7 +179,7 @@ graph TD
   WW["Wolfgang Wenger<br/>✱ 20.07.1936 · † 13.11.1962"]:::mat
 
   FK["Fritz Kohler<br/>✱ 02.06.1933 Landsberg a.L.<br/>† 12.05.2025"]:::mat
-  ELFIE["Elfriede „Elfie / Awili“ Kohler<br/>✱ 29.04.1930 · † ?"]:::mat
+  ELFIE["Elfriede „Elfie / Awili“ Kohler<br/>✱ 29.04.1930 · † 25.09.2011"]:::mat
   IK["Ingrid Kohler, geb. Wenger<br/>✱ 25.06.1933 · † 04.04.2018"]:::mat
 
   US["Ulrich Schönbach<br/>✱ 10.09.1966 Fürstenfeldbruck"]:::live
@@ -199,8 +206,16 @@ graph TD
   PAULINE -.- JOSEF
   FS --> AS
   ASP --> AS
+  FS --> GERL
+  ASP --> GERL
+  FS --> RAIN
+  ASP --> RAIN
   AS --> US
   ER --> US
+  STEB --> ER
+  STEB --> ANNE
+  STEB --> MARIAST
+  STEB --> HEDW
   AS --> ELLEN
   ER --> ELLEN
   ELLEN --> SAN
@@ -246,6 +261,11 @@ graph TD
   click WW call jumpTo("p-wolfgang")
   click FK call jumpTo("p-fritzk")
   click ELFIE call jumpTo("p-elfie")
+  click GERL call jumpTo("p-gerlinde")
+  click RAIN call jumpTo("p-rainer")
+  click ANNE call jumpTo("p-anneliese")
+  click MARIAST call jumpTo("p-maria-st")
+  click HEDW call jumpTo("p-hedwig")
   click IK call jumpTo("p-ingrid")
   click US call jumpTo("p-ulrich")
   click BK call jumpTo("p-barbara")
@@ -302,7 +322,25 @@ graph TD
         <div class="person mat" id="p-fritzk"><div class="rl">Großvater · mütterlich</div><div class="nm">Fritz Kohler</div><div class="dt">✱ 02.06.1933 · † 12.05.2025</div><span class="pl">Landsberg am Lech</span></div>
         <div class="person mat" id="p-ingrid"><div class="rl">Großmutter · mütterlich</div><div class="nm">Ingrid Kohler, geb. Wenger</div><div class="dt">✱ 25.06.1933 · † 04.04.2018</div></div>
         <div class="person mat" id="p-wolfgang"><div class="rl">Großonkel</div><div class="nm">Wolfgang Wenger</div><div class="dt">✱ 20.07.1936 · † 13.11.1962</div><div class="note">Bruder von Ingrid. Tödlich verunglückt bei einem Autounfall auf der alten B17 zwischen Kaufering und Hurlach.</div></div>
-        <div class="person mat" id="p-elfie"><div class="rl">Großtante · Schwester von Fritz Kohler</div><div class="nm">Elfriede „Elfie / Awili" Kohler</div><div class="dt">✱ 29.04.1930 · † 25.09. (Jahr noch zu klären)</div><div class="note">Tochter von Friedrich Kohler sen. &amp; Frieda Barth, Schwester von Fritz Kohler.</div></div>
+        <div class="person mat" id="p-elfie"><div class="rl">Großtante · Schwester von Fritz Kohler</div><div class="nm">Elfriede „Elfie / Awili" Kohler</div><div class="dt">✱ 29.04.1930 · † 25.09.2011</div><div class="note">Tochter von Friedrich Kohler sen. &amp; Frieda Barth, Schwester von Fritz Kohler.</div></div>
+      </div>
+    </div>
+
+    <div class="gen">
+      <div class="gen-title">Geschwister meiner Großeltern</div>
+      <div class="cards">
+        <div class="person live" id="p-gerlinde"><div class="rl">Schwester von Alfred · väterlich</div><div class="nm">Gerlinde Linsenmann, geb. Schönbach</div><div class="dt">✱ 14.01.1933</div><div class="note">Verheiratet mit Adolf Linsenmann (✱ 29.04.1932). Beide leben.</div></div>
+        <div class="person pat" id="p-rainer"><div class="rl">Bruder von Alfred · väterlich</div><div class="nm">Rainer Schönbach</div><div class="dt">✱ 12.01.1938 Petlarn · † 25.08.2001</div><div class="note">Verheiratet mit Helene Schönbach (✱ 05.08.1942 · † 21.07.2023).</div></div>
+        <div class="person pat" id="p-anneliese"><div class="rl">Schwester von Erna · väterlich</div><div class="nm">Anneliese Resch, geb. Steber</div><div class="dt">✱ 25.12.1927 · † 07.04.1998</div><div class="note">Verheiratet mit Felix Resch.</div></div>
+        <div class="person pat" id="p-maria-st"><div class="rl">Schwester von Erna · väterlich</div><div class="nm">Maria Sieber, geb. Steber</div><div class="dt">✱ 08.11.1930 · † 31.08.2007</div><div class="note">Verheiratet mit Joseph Sieber (✱ 17.06.1931 · † 28.03.2002).</div></div>
+        <div class="person pat" id="p-hedwig"><div class="rl">Schwester von Erna · väterlich</div><div class="nm">Hedwig Friede, geb. Steber</div><div class="dt">✱ 18.12.1937 (Tag unsicher)</div><div class="note">Verheiratet mit Erich Friede (✱ 28.04.1936 · † 07.12.2022).</div></div>
+      </div>
+    </div>
+
+    <div class="gen">
+      <div class="gen-title">Weitere Verwandte (Einordnung offen)</div>
+      <div class="cards">
+        <div class="person mat" id="p-fred"><div class="rl">Wenger-Verwandtschaft · Grad noch zu klären</div><div class="nm">Fritz-Jürgen („Fred") Wenger</div><div class="dt">✱ 21.04.1933 · † 24.12.2016 · Winnipeg (Kanada)</div><div class="note">In Kanada „Fred" genannt. Verheiratet mit Marianne Wenger (✱ 23.07.1930 · † 14.09.2012, Winnipeg). Wie genau er mit Dr. Friedrich Wenger bzw. Ingrid verwandt ist, ist noch offen.</div></div>
       </div>
     </div>
 
@@ -363,7 +401,8 @@ graph TD
     <h2 class="serif">Offene Fragen & Forschungsspuren</h2>
     <p style="color:var(--soft);max-width:64ch;margin-top:0">Das Folgende ist <b>nicht gesichert</b> — es sind Hinweise, Vermutungen und noch zu prüfende Spuren. Sie stehen hier getrennt, damit der Stammbaum oben nur Belegtes zeigt.</p>
     <ul>
-      <li><b>Beruflicher Weg von Dr. Friedrich Wenger vor der BASF.</b><span class="meta">Vermutung (Familienüberlieferung): leitende Tätigkeit in der Chemieindustrie, Einsatz von Zwangsarbeitern, Flucht vor der Roten Armee 1945. Eine mögliche Station: das IG-Farben-Faserwerk (Perlon) in Landsberg an der Warthe. Noch nicht belegt. Die NS-Frage ist über das Bundesarchiv ergebnisoffen zu klären.</span></li>
+      <li><b>Dr. Friedrich Wenger in der NS-Zeit — Entnazifizierung &amp; Einsatz für die Zwangsarbeiter.</b><span class="meta">Nach Auskunft der Familie (offizielle Unterlagen liegen bei der Familie vor und werden hier ergänzt) wurde Dr. Wenger von der amerikanischen Besatzung <b>offiziell entnazifiziert</b>. Belegt ist demnach, dass er sich für die in der Fabrik eingesetzten Zwangsarbeiterinnen und Zwangsarbeiter eingesetzt hat — unter anderem besorgte er Kleidung für die Frauen, die unter der Kälte litten. (Quelle: Familienauskunft 06/2026; Originalunterlagen folgen.)</span></li>
+      <li><b>Genauer Kriegs-Arbeitgeber von Dr. Wenger.</b><span class="meta">Noch offen ist, bei welchem Werk er bis 1945 tätig war (eine Spur führt zur IG-Farben-Chemiefaserproduktion). Ab 1952 dann Prokurist bei der BASF.</span></li>
       <li><b>Dissertation Marburg 1928.</b><span class="meta">In der Deutschen Nationalbibliothek liegt eine chemische Dissertation „Fritz Wenger, Marburg 1928". Sehr wahrscheinlich von ihm (geboren in Marburg), aber die Identität ist noch nicht endgültig bestätigt.</span></li>
       <li><b>Herkunft der Familie Maar.</b><span class="meta">Im Reichsanzeiger ist eine Marburger Kaufmannsfamilie Maar belegt (Carl & Louise Maar, 1902). Möglicherweise stammt Johanna Maar aus dieser Familie — das würde die Verbindung zweier Marburger Familien erklären. Unbestätigt.</span></li>
       <li><b>Schönbach auf der Gochelmühle (seit den 1860ern).</b><span class="meta">Der große Tachauer „Leininger"-Stammbaum verzeichnet „Ignaz Schönbach ∞ Theresia Nahrhaft" auf der Gochlmühle Nr. 55, Petlarn, um 1867 — vermutlich Eltern/Großeltern von Ignaz Karl Schönbach. Die direkte Linie ist über die Purschauer Kirchenbücher (Porta fontium) zu ziehen.</span></li>
