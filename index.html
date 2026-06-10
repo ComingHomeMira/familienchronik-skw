@@ -8,12 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.js"></script>
-<script src="https://unpkg.com/hammerjs@2.0.8/hammer.min.js"></script>
 <style>
   :root{
     --bg:#f5efe4; --card:#fffdf8; --cream:#fbf6ec;
@@ -50,21 +47,6 @@
   .dot.unk{background:#eeeae2;border-color:#b9ad97}
 
   /* tree */
-  .tree-shell{position:relative}
-  .mermaid-frame{background:var(--cream);border:1px solid var(--rule);border-radius:14px;height:min(80vh,860px);overflow:hidden;position:relative;box-shadow:var(--shadow)}
-  @media (max-width:600px){ .mermaid-frame{height:64vh} }
-  .mermaid-frame.full{position:fixed;inset:18px;height:auto;z-index:999;box-shadow:0 30px 80px -20px rgba(40,20,10,.5)}
-  .mermaid-frame .mermaid{width:100%;height:100%}
-  .mermaid-frame .mermaid svg{width:100%!important;height:100%!important;max-width:none!important;cursor:grab;touch-action:none}
-  .mermaid-frame .mermaid svg:active{cursor:grabbing}
-  .mermaid-frame .mermaid svg g.node{cursor:pointer}
-  .mermaid-frame .mermaid svg g.node:hover rect{filter:brightness(1.04) drop-shadow(0 2px 6px rgba(0,0,0,.15))}
-  .ctrl{position:absolute;top:13px;right:13px;display:flex;gap:5px;z-index:5;background:rgba(251,246,236,.92);border:1px solid var(--rule);border-radius:10px;padding:5px;box-shadow:var(--shadow)}
-  .ctrl button{width:33px;height:33px;border:0;border-radius:7px;background:transparent;color:var(--ink);cursor:pointer;font-family:'Cormorant Garamond',serif;font-size:1.15rem;display:flex;align-items:center;justify-content:center}
-  .ctrl button:hover{background:var(--bg)}
-  .ctrl button.w{width:auto;padding:0 11px;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;font-family:'Inter',sans-serif}
-  .hint{position:absolute;bottom:13px;left:13px;z-index:5;background:rgba(251,246,236,.85);border:1px solid var(--rule);border-radius:8px;padding:5px 11px;font-size:.76rem;color:var(--soft);pointer-events:none}
-
   /* generation blocks */
   .gen{margin-top:30px}
   .gen-title{font-size:.78rem;letter-spacing:.24em;text-transform:uppercase;color:var(--wine);margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid var(--rule)}
@@ -132,169 +114,46 @@
   <section>
     <h2 class="serif">Der Stammbaum</h2>
     <div class="legend">
-      <span><i class="dot pat"></i> Väterliche Linie (Schönbach, Petlarn/Tachau)</span>
-      <span><i class="dot mat"></i> Mütterliche Linie (Kohler · Wenger)</span>
+      <span><i class="dot pat"></i> Väterliche Linie</span>
+      <span><i class="dot mat"></i> Mütterliche Linie</span>
       <span><i class="dot live"></i> Lebende Familie</span>
-      <span><i class="dot unk"></i> noch unbekannt</span>
+      <span><i class="dot unk"></i> noch offen</span>
     </div>
-    <div class="tree-shell">
-      <div class="mermaid-frame" id="treeFrame">
-        <div class="ctrl">
-          <button onclick="tz.zoomIn()" title="Größer">+</button>
-          <button onclick="tz.zoomOut()" title="Kleiner">−</button>
-          <button onclick="tz.resetZoom();tz.center();tz.fit()" title="Zurücksetzen">↺</button>
-          <button class="w" onclick="toggleFull()">Vollbild</button>
-        </div>
-        <div class="hint">Ziehen zum Verschieben · Mausrad zum Zoomen · Klick auf eine Person springt zur Karte</div>
-<pre class="mermaid">
-%%{init: {'theme':'base','themeVariables':{'fontFamily':'Cormorant Garamond, Georgia, serif','fontSize':'14px','primaryColor':'#fbf6ec','primaryTextColor':'#241b14','primaryBorderColor':'#d8c8a8','lineColor':'#b09a6a'}}}%%
-graph TD
-  classDef pat fill:#e7f0e3,stroke:#6f9a6a,color:#1f2f1d
-  classDef mat fill:#f6e7e3,stroke:#b3776f,color:#3a1c1c
-  classDef live fill:#e2ebf6,stroke:#6b87ad,color:#1f3354
-  classDef unk fill:#eeeae2,stroke:#b9ad97,color:#8a7d68,stroke-dasharray:4 3
-
-  FRRE["Franz Reiser"]:::pat
-  SURE["Susanna Reiser, geb. Thent (?)"]:::pat
-  IKS["Ignaz Karl Schönbach<br/>Petlarn · Gochelmühle"]:::pat
-  MRE["Maria Schönbach, geb. Reiser<br/>aus Polsau"]:::pat
-  ANP["Anton Pruy<br/>✱ 1882 · † 1951"]:::pat
-  ANG["Anna Pruy, geb. Günther<br/>✱ 1889 · † 1964"]:::pat
-
-  FS["Franz Schönbach<br/>✱ 08.02.1912 · gefallen 25.04.1945"]:::pat
-  ASP["Anna Schönbach, geb. Pruy<br/>✱ 27.01.1912 · † 28.08.1986"]:::pat
-  PAULINE["Pauline Tendler, geb. Pruy<br/>✱ 1920 · † 2005"]:::pat
-  JOSEF["Josef Tendler<br/>✱ 1911 · † 1994"]:::pat
-  AS["Alfred Schönbach<br/>✱ 12.05.1934 Petlarn · † 07.06.1993<br/>1946 vertrieben → Bayern"]:::pat
-  GERL["Gerlinde Linsenmann,<br/>geb. Schönbach · ✱ 14.01.1933"]:::live
-  RAIN["Rainer Schönbach<br/>✱ 12.01.1938 Petlarn · † 25.08.2001"]:::pat
-  ER["Erna Schönbach, geb. Steber<br/>✱ 30.10.1932 · † 07.02.2014<br/>Türkenfeld"]:::pat
-  STEB["Familie Steber · Türkenfeld<br/>(Eltern noch unbekannt)"]:::unk
-  ANNE["Anneliese Resch,<br/>geb. Steber · ✱ 25.12.1927 · † 07.04.1998"]:::pat
-  MARIAST["Maria Sieber,<br/>geb. Steber · ✱ 08.11.1930 · † 31.08.2007"]:::pat
-  HEDW["Hedwig Friede,<br/>geb. Steber · ✱ 19.12.1937"]:::pat
-
-  FKS["Friedrich Kohler sen.<br/>✱ 09.04.1899 Velden a.d.Vils<br/>† 07.08.1979"]:::mat
-  FRK["Frieda Kohler, geb. Barth<br/>✱ 03.05.1909 Wurmannsquick<br/>† 04.11.1966"]:::mat
-  FW["Dr. Friedrich „Fritz“ Wenger<br/>✱ 24.10.1902 Marburg · † 04.01.1977<br/>Dipl.-Chemiker · IG Farben, später BASF"]:::mat
-  HW["Johanna „Hanni“ Wenger, geb. Maar<br/>✱ 04.08.1904 Essen · † 21.03.1969"]:::mat
-  WW["Wolfgang Wenger<br/>✱ 20.07.1936 · † 13.11.1962"]:::mat
-  FJW["Fritz-Jürgen „Fred“ Wenger<br/>Bruder von Ingrid · ✱ 23.07.1930<br/>† 14.09.2012 · Winnipeg (Kanada)"]:::mat
-
-  FK["Fritz Kohler<br/>✱ 02.06.1933 Landsberg a.L.<br/>† 12.05.2025"]:::mat
-  ELFIE["Elfriede „Elfie“ Anetsberger,<br/>geb. Kohler · ✱ 29.04.1930 · † 25.09.2011"]:::mat
-  ANET["Joseph Anetsberger<br/>⚭ Elfie Kohler"]:::mat
-  STEPH["Stephan Anetsberger<br/>✱ 27.08.1966"]:::live
-  IK["Ingrid Kohler, geb. Wenger<br/>✱ 25.06.1933 · † 04.04.2018"]:::mat
-
-  US["Ulrich Schönbach<br/>✱ 10.09.1966 Fürstenfeldbruck"]:::live
-  BK["Barbara Schönbach, geb. Kohler<br/>✱ 25.02.1964"]:::live
-  PET["Petra Kohler<br/>✱ 21.06.1962"]:::live
-  MAR["Martin Kohler<br/>✱ 12.03.1967"]:::live
-  L["Lennard Schönbach<br/>✱ 18.06.1997 Landsberg a.L."]:::live
-  LE["Leonie Schönbach<br/>✱ 08.02.2000 Landsberg a.L."]:::live
-  ELLEN["Eleonore „Ellen“ Bajog, geb. Schönbach<br/>✱ 16.09.1961 · Türkenfeld"]:::live
-  SAN["Sandra Scharf, geb. Bajog<br/>✱ 19.03.1993"]:::live
-  ALEX["Alexander Bajog<br/>✱ 15.09.1986"]:::live
-  ANT["Antonia Ettner<br/>✱ 23.07.1990"]:::live
-  MAXI["Maximilian Ettner<br/>✱ 10.03.1992"]:::live
-  CORB["Korbinian Ettner<br/>✱ 03.07.1995"]:::live
-
-  FRRE --> MRE
-  SURE --> MRE
-  IKS --> FS
-  MRE --> FS
-  ANP --> ASP
-  ANG --> ASP
-  ANP --> PAULINE
-  ANG --> PAULINE
-  PAULINE -.- JOSEF
-  FS --> AS
-  ASP --> AS
-  FS --> GERL
-  ASP --> GERL
-  FS --> RAIN
-  ASP --> RAIN
-  AS --> US
-  ER --> US
-  STEB --> ER
-  STEB --> ANNE
-  STEB --> MARIAST
-  STEB --> HEDW
-  AS --> ELLEN
-  ER --> ELLEN
-  ELLEN --> SAN
-  ELLEN --> ALEX
-  FKS --> FK
-  FRK --> FK
-  FKS --> ELFIE
-  FRK --> ELFIE
-  ELFIE -.- ANET
-  ELFIE --> STEPH
-  ANET --> STEPH
-  FW --> IK
-  HW --> IK
-  FW --> WW
-  HW --> WW
-  FW --> FJW
-  HW --> FJW
-  FK --> BK
-  IK --> BK
-  FK --> PET
-  IK --> PET
-  PET --> ANT
-  PET --> MAXI
-  PET --> CORB
-  FK --> MAR
-  IK --> MAR
-  US --> L
-  BK --> L
-  US --> LE
-  BK --> LE
-
-  click FRRE call jumpTo("p-franz-r")
-  click SURE call jumpTo("p-susanna-r")
-  click IKS call jumpTo("p-iks")
-  click MRE call jumpTo("p-maria-r")
-  click ANP call jumpTo("p-anton-p")
-  click ANG call jumpTo("p-anna-g")
-  click PAULINE call jumpTo("p-pauline")
-  click JOSEF call jumpTo("p-josef")
-  click FS call jumpTo("p-franz-s")
-  click ASP call jumpTo("p-anna-s")
-  click AS call jumpTo("p-alfred")
-  click ER call jumpTo("p-erna")
-  click FKS call jumpTo("p-fksen")
-  click FRK call jumpTo("p-frieda")
-  click FW call jumpTo("p-fritzw")
-  click HW call jumpTo("p-hanni")
-  click WW call jumpTo("p-wolfgang")
-  click FK call jumpTo("p-fritzk")
-  click ELFIE call jumpTo("p-elfie")
-  click FJW call jumpTo("p-fred")
-  click ANET call jumpTo("p-joseph-a")
-  click STEPH call jumpTo("p-stephan-a")
-  click GERL call jumpTo("p-gerlinde")
-  click RAIN call jumpTo("p-rainer")
-  click ANNE call jumpTo("p-anneliese")
-  click MARIAST call jumpTo("p-maria-st")
-  click HEDW call jumpTo("p-hedwig")
-  click IK call jumpTo("p-ingrid")
-  click US call jumpTo("p-ulrich")
-  click BK call jumpTo("p-barbara")
-  click PET call jumpTo("p-petra")
-  click MAR call jumpTo("p-martin")
-  click L call jumpTo("p-lennard")
-  click LE call jumpTo("p-leonie")
-  click ELLEN call jumpTo("p-ellen")
-  click SAN call jumpTo("p-sandra")
-  click ALEX call jumpTo("p-alex")
-  click ANT call jumpTo("p-antonia")
-  click MAXI call jumpTo("p-maxi")
-  click CORB call jumpTo("p-corbinian")
-</pre>
-      </div>
+    <p class="treehint">Oben stehen die drei Familien. Tippe auf eine Zeile mit Pfeil&nbsp;(▸), um den Zweig auf- oder zuzuklappen. Unterstrichene Namen haben eine eigene Detailkarte weiter unten — ein Klick darauf springt dorthin.</p>
+    <div class="treebar">
+      <button onclick="treeExpandAll()">▾ Alles ausklappen</button>
+      <button onclick="treeCollapseAll()">▸ Alles einklappen</button>
     </div>
+    <div id="famtree" class="famtree"></div>
+    <style>
+      .treehint{color:var(--soft);font-size:.92rem;max-width:66ch;margin:.1rem 0 1rem;line-height:1.55}
+      .treebar{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+      .treebar button{font-family:'Inter',sans-serif;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:8px 15px;cursor:pointer;box-shadow:var(--shadow)}
+      .treebar button:hover{background:var(--bg);color:var(--wine)}
+      .famtree{background:var(--cream);border:1px solid var(--rule);border-radius:14px;padding:16px 14px;box-shadow:var(--shadow);overflow-x:auto}
+      .famtree ul{list-style:none;margin:0;padding-left:24px}
+      .famtree > ul{padding-left:2px}
+      .famtree li{position:relative}
+      .famtree ul ul{border-left:1px solid var(--rule);margin-left:11px;padding-left:17px}
+      .trow{display:flex;align-items:baseline;gap:8px;padding:5px 8px;border-radius:8px;margin:1px 0;transition:background .15s;flex-wrap:wrap}
+      .trow.has{cursor:pointer}
+      .trow.has:hover{background:var(--bg)}
+      .caret{display:inline-block;width:13px;flex:0 0 13px;color:var(--gold);font-size:.78rem;transition:transform .18s;text-align:center;transform:translateY(-1px)}
+      li:not(.collapsed) > .trow .caret{transform:rotate(90deg) translateX(-1px)}
+      .trow:not(.has) .caret{visibility:hidden}
+      .tdot{width:9px;height:9px;flex:0 0 9px;border-radius:3px;border:1px solid;align-self:center}
+      li.pat > .trow .tdot{background:#e4efe1;border-color:#6f9a6a}
+      li.mat > .trow .tdot{background:#f6e7e3;border-color:#b3776f}
+      li.live > .trow .tdot{background:#e0e9f5;border-color:#6b87ad}
+      li.unk > .trow .tdot{background:#eeeae2;border-color:#b9ad97;border-style:dashed}
+      .tname{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.12rem;color:var(--ink);line-height:1.25}
+      .tname.lnk{cursor:pointer;border-bottom:1px dotted var(--faint)}
+      .tname.lnk:hover{color:var(--wine);border-bottom-color:var(--wine)}
+      .tmeta{font-size:.8rem;color:var(--faint)}
+      .famtree > ul > li > .trow .tname{font-size:1.34rem;font-weight:600;color:var(--wine)}
+      .famtree > ul > li{margin-bottom:4px}
+      li.collapsed > ul{display:none}
+    </style>
   </section>
 
   <div class="rule"></div>
@@ -488,61 +347,161 @@ graph TD
 </div>
 
 <script>
-  let tz = { zoomIn(){}, zoomOut(){}, resetZoom(){}, center(){}, fit(){}, resize(){} };
-
   function jumpTo(id){
     const el = document.getElementById(id);
     if(!el) return;
-    const f = document.getElementById('treeFrame');
-    if(f.classList.contains('full')) toggleFull();
     el.scrollIntoView({behavior:'smooth', block:'center'});
     el.style.transition='box-shadow .3s, transform .3s';
     el.style.boxShadow='0 0 0 3px var(--gold), 0 12px 30px -12px rgba(168,120,50,.55)';
     el.style.transform='translateY(-2px)';
     setTimeout(()=>{ el.style.boxShadow=''; el.style.transform=''; }, 1700);
   }
-  function toggleFull(){
-    const f = document.getElementById('treeFrame');
-    f.classList.toggle('full');
-    setTimeout(()=>{ try{ tz.resize(); tz.fit(); tz.center(); }catch(e){} }, 250);
+
+  const FAM = [
+    { n:"Unsere Familie", d:"Ulrich Schönbach & Barbara, geb. Kohler", c:"live", ch:[
+      { n:"Ulrich Schönbach", d:"✱ 10.09.1966 · Fürstenfeldbruck", c:"live", id:"p-ulrich" },
+      { n:"Barbara Schönbach, geb. Kohler", d:"✱ 25.02.1964", c:"live", id:"p-barbara" },
+      { n:"Lennard Schönbach", d:"✱ 18.06.1997 · Landsberg a. L.", c:"live", id:"p-lennard" },
+      { n:"Leonie Schönbach", d:"✱ 08.02.2000 · Landsberg a. L.", c:"live", id:"p-leonie" }
+    ]},
+    { n:"Väterliche Linie · Schönbach / Steber", d:"Westböhmen & Oberbayern", c:"pat", ch:[
+      { n:"Alfred Schönbach × Erna, geb. Steber", d:"Großeltern väterlich", c:"pat", ch:[
+        { n:"Alfred Schönbach", d:"✱ 12.05.1934 Petlarn · † 07.06.1993", c:"pat", id:"p-alfred" },
+        { n:"Erna Schönbach, geb. Steber", d:"✱ 30.10.1932 · † 07.02.2014", c:"pat", id:"p-erna" },
+        { n:"Ulrich Schönbach", d:"✱ 10.09.1966 → siehe Unsere Familie", c:"live", id:"p-ulrich" },
+        { n:"Eleonore „Ellen“ Bajog, geb. Schönbach", d:"✱ 16.09.1961 · Türkenfeld", c:"live", id:"p-ellen", ch:[
+          { n:"Alexander Bajog", d:"✱ 15.09.1986 · ⚭ Julia", c:"live", id:"p-alex", ch:[
+            { n:"Luis Bajog", d:"✱ 07.0?. (Datum offen)", c:"live" },
+            { n:"Lina Bajog", d:"✱ 25.06.2015", c:"live" }
+          ]},
+          { n:"Sandra Scharf, geb. Bajog", d:"✱ 19.03.1993 · ⚭ Marcel", c:"live", id:"p-sandra", ch:[
+            { n:"Hanna Scharf", d:"✱ 10.06.2020", c:"live" },
+            { n:"Lionel Scharf", d:"✱ 05.06.2022", c:"live" }
+          ]}
+        ]}
+      ]},
+      { n:"Alfreds Eltern & Vorfahren", d:"Schönbach · Pruy · Reiser (Petlarn/Tachau)", c:"pat", ch:[
+        { n:"Franz Schönbach", d:"✱ 08.02.1912 · gefallen 25.04.1945", c:"pat", id:"p-franz-s" },
+        { n:"Anna Schönbach, geb. Pruy", d:"✱ 27.01.1912 · † 28.08.1986", c:"pat", id:"p-anna-s" },
+        { n:"Ignaz Karl Schönbach", d:"Petlarn · Gochelmühle", c:"pat", id:"p-iks" },
+        { n:"Maria Schönbach, geb. Reiser", d:"aus Polsau", c:"pat", id:"p-maria-r" },
+        { n:"Franz Reiser", d:"3×-Urgroßvater", c:"pat", id:"p-franz-r" },
+        { n:"Susanna Reiser, geb. Thent (?)", d:"3×-Urgroßmutter", c:"pat", id:"p-susanna-r" },
+        { n:"Anton Pruy", d:"✱ 1882 · † 1951", c:"pat", id:"p-anton-p" },
+        { n:"Anna Pruy, geb. Günther", d:"✱ 1889 · † 1964", c:"pat", id:"p-anna-g" },
+        { n:"Pauline Tendler, geb. Pruy", d:"✱ 1920 · † 2005 · ⚭ Josef Tendler", c:"pat", id:"p-pauline" }
+      ]},
+      { n:"Alfreds Geschwister", d:"Linsenmann · Schönbach", c:"pat", ch:[
+        { n:"Gerlinde Linsenmann, geb. Schönbach", d:"✱ 14.01.1933 · ⚭ Adolf Linsenmann", c:"live", id:"p-gerlinde", ch:[
+          { n:"Franz Linsenmann", d:"⚭ Luise", c:"live", id:"p-franz-l", ch:[
+            { n:"Christopher", d:"", c:"live" },
+            { n:"[2. Vorname unklar]", d:"Lesung offen", c:"unk" },
+            { n:"Julian", d:"", c:"live" }
+          ]},
+          { n:"Gudrun Linsenmann", d:"⚭ Igor · keine Kinder", c:"live", id:"p-gudrun-l" }
+        ]},
+        { n:"Rainer Schönbach", d:"✱ 12.01.1938 Petlarn · † 25.08.2001 · ⚭ Helene", c:"pat", id:"p-rainer", ch:[
+          { n:"Antje Seyberth, geb. Schönbach", d:"geschieden", c:"live", id:"p-antje", ch:[
+            { n:"Max", d:"", c:"live" },
+            { n:"Moritz", d:"", c:"live" },
+            { n:"Lisa", d:"", c:"live" }
+          ]},
+          { n:"Michaela Schönbach", d:"⚭ Steffen", c:"live", id:"p-michaela", ch:[
+            { n:"Elena", d:"", c:"live" },
+            { n:"Immanuel", d:"", c:"live" },
+            { n:"Aurelian", d:"", c:"live" }
+          ]},
+          { n:"Thomas Schönbach", d:"geschieden · 2 Söhne", c:"live", id:"p-thomas-s" }
+        ]}
+      ]},
+      { n:"Ernas Geschwister (Steber)", d:"Türkenfeld", c:"pat", ch:[
+        { n:"Anneliese Resch, geb. Steber", d:"✱ 25.12.1927 · † 07.04.1998 · ⚭ Felix Resch", c:"pat", id:"p-anneliese", ch:[
+          { n:"Anneliese „Alice“ Resch", d:"Foto abgeschnitten – evtl. mehr", c:"live", id:"p-alice-r" }
+        ]},
+        { n:"Maria Sieber, geb. Steber", d:"✱ 08.11.1930 · † 31.08.2007 · ⚭ Joseph Sieber", c:"pat", id:"p-maria-st", ch:[
+          { n:"Wolfgang Sieber", d:"", c:"live", id:"p-wolfgang-si" },
+          { n:"Klaus Sieber", d:"", c:"live", id:"p-klaus-si" }
+        ]},
+        { n:"Hedwig Friede, geb. Steber", d:"✱ 19.12.1937 · ⚭ Erich Friede", c:"pat", id:"p-hedwig", ch:[
+          { n:"Barbara Friede", d:"✱ 11.08.1961 · ledig", c:"live", id:"p-barbara-f" },
+          { n:"Heimo Friede", d:"✱ 02.07.1967 · ledig", c:"live", id:"p-heimo-f" }
+        ]}
+      ]}
+    ]},
+    { n:"Mütterliche Linie · Kohler / Wenger", d:"Niederbayern · Hessen · Ruhrgebiet", c:"mat", ch:[
+      { n:"Fritz Kohler × Ingrid, geb. Wenger", d:"Großeltern mütterlich", c:"mat", ch:[
+        { n:"Fritz Kohler", d:"✱ 02.06.1933 Landsberg · † 12.05.2025", c:"mat", id:"p-fritzk" },
+        { n:"Ingrid Kohler, geb. Wenger", d:"✱ 25.06.1933 · † 04.04.2018", c:"mat", id:"p-ingrid" },
+        { n:"Barbara Schönbach, geb. Kohler", d:"✱ 25.02.1964 → siehe Unsere Familie", c:"live", id:"p-barbara" },
+        { n:"Petra Kohler", d:"✱ 21.06.1962", c:"live", id:"p-petra", ch:[
+          { n:"Antonia Ettner", d:"✱ 23.07.1990 · mit Konrad Schörer", c:"live", id:"p-antonia", ch:[
+            { n:"Hedwig", d:"✱ 27.06.2022", c:"live" },
+            { n:"Philomena", d:"✱ 29.04.2024", c:"live" }
+          ]},
+          { n:"Maximilian Ettner", d:"✱ 10.03.1992 · geschieden", c:"live", id:"p-maxi", ch:[
+            { n:"Leon", d:"✱ ~10.2013 (Datum offen)", c:"live" },
+            { n:"Jonas", d:"✱ 07.12.2015", c:"live" },
+            { n:"Lara", d:"", c:"live" }
+          ]},
+          { n:"Korbinian Ettner", d:"✱ 03.07.1995 · keine Kinder", c:"live", id:"p-corbinian" }
+        ]},
+        { n:"Martin Kohler", d:"✱ 12.03.1967", c:"live", id:"p-martin" }
+      ]},
+      { n:"Fritz Kohlers Eltern (Kohler / Barth)", d:"Velden a. d. Vils · Wurmannsquick", c:"mat", ch:[
+        { n:"Friedrich Kohler sen.", d:"✱ 09.04.1899 Velden · † 07.08.1979", c:"mat", id:"p-fksen" },
+        { n:"Frieda Kohler, geb. Barth", d:"✱ 03.05.1909 Wurmannsquick · † 04.11.1966", c:"mat", id:"p-frieda" },
+        { n:"Elfriede „Elfie“ Anetsberger, geb. Kohler", d:"✱ 29.04.1930 · † 25.09.2011 · ⚭ Joseph", c:"mat", id:"p-elfie", ch:[
+          { n:"Stephan Anetsberger", d:"✱ 27.08.1966", c:"live", id:"p-stephan-a" }
+        ]},
+        { n:"Berta Stoiber, vermutl. geb. Barth", d:"✱ 23.04.1906 · † 05.10.1981 · ⚭ Xaver (unbestätigt)", c:"mat" }
+      ]},
+      { n:"Ingrids Eltern (Wenger / Maar)", d:"Marburg · Essen", c:"mat", ch:[
+        { n:"Dr. Friedrich „Fritz“ Wenger", d:"✱ 24.10.1902 Marburg · † 04.01.1977 · IG Farben, BASF", c:"mat", id:"p-fritzw" },
+        { n:"Johanna „Hanni“ Wenger, geb. Maar", d:"✱ 04.08.1904 Essen · † 21.03.1969", c:"mat", id:"p-hanni" }
+      ]},
+      { n:"Ingrids Geschwister (Wenger)", d:"u. a. Kanada-Linie", c:"mat", ch:[
+        { n:"Fritz-Jürgen „Fred“ Wenger", d:"✱ 23.07.1930 · † 14.09.2012 Winnipeg · ⚭ Marianne (✱ 21.04.1933 · † 14.12.2016)", c:"mat", id:"p-fred", ch:[
+          { n:"Christine Hayden, geb. Wenger", d:"✱ 01.11.1965 · ⚭ Geoffrey Hayden · Winnipeg", c:"live", id:"p-christine", ch:[
+            { n:"Elisabeth Hayden", d:"✱ 07.06.1993", c:"live" },
+            { n:"Stephanie Hayden", d:"✱ 03.04.1995", c:"live" }
+          ]},
+          { n:"Susanne Peters, geb. Wenger", d:"✱ 27.03.1969 · ⚭ Brian Peters", c:"live", id:"p-susanne", ch:[
+            { n:"Jennifer", d:"✱ 30.10.1998", c:"live" },
+            { n:"Erika", d:"✱ 02.10.2002", c:"live" }
+          ]}
+        ]},
+        { n:"Wolfgang Wenger", d:"✱ 20.07.1936 · † 13.11.1962", c:"mat", id:"p-wolfgang" }
+      ]}
+    ]}
+  ];
+
+  function buildNode(node){
+    const li = document.createElement('li');
+    if(node.c) li.classList.add(node.c);
+    const hasKids = node.ch && node.ch.length;
+    if(hasKids) li.classList.add('collapsed');
+    const row = document.createElement('div');
+    row.className = 'trow' + (hasKids ? ' has' : '');
+    const caret = document.createElement('span'); caret.className = 'caret'; caret.textContent = '▸'; row.appendChild(caret);
+    const dot = document.createElement('span'); dot.className = 'tdot'; row.appendChild(dot);
+    const name = document.createElement('span'); name.className = 'tname' + (node.id ? ' lnk' : ''); name.textContent = node.n;
+    if(node.id){ name.addEventListener('click', function(e){ e.stopPropagation(); jumpTo(node.id); }); }
+    row.appendChild(name);
+    if(node.d){ const m = document.createElement('span'); m.className = 'tmeta'; m.textContent = node.d; row.appendChild(m); }
+    if(hasKids){ row.addEventListener('click', function(){ li.classList.toggle('collapsed'); }); }
+    li.appendChild(row);
+    if(hasKids){ const ul = document.createElement('ul'); node.ch.forEach(function(ch){ ul.appendChild(buildNode(ch)); }); li.appendChild(ul); }
+    return li;
   }
-
-  mermaid.initialize({ startOnLoad:false, securityLevel:'loose',
-    flowchart:{ useMaxWidth:false, htmlLabels:true, nodeSpacing:38, rankSpacing:64 } });
-
-  (async () => {
-    await mermaid.run({ querySelector:'.mermaid' });
-    const svg = document.querySelector('#treeFrame .mermaid svg');
-    if (svg && window.svgPanZoom){
-      svg.removeAttribute('style'); svg.style.width='100%'; svg.style.height='100%';
-
-      // Touch-/Pinch-Unterstützung fürs Handy (svg-pan-zoom kann das nicht von allein)
-      const touchHandler = {
-        haltEventListeners:['touchstart','touchend','touchmove','touchleave','touchcancel'],
-        init:function(o){
-          if(!window.Hammer) return;
-          const inst=o.instance; let sx=0, sy=0, scale=1;
-          this.hammer=new Hammer(o.svgElement);
-          this.hammer.get('pinch').set({enable:true});
-          this.hammer.on('panstart panmove',function(e){
-            if(e.type==='panstart'){ sx=0; sy=0; }
-            inst.panBy({x:e.deltaX-sx, y:e.deltaY-sy}); sx=e.deltaX; sy=e.deltaY;
-          });
-          this.hammer.on('pinchstart pinchmove',function(e){
-            if(e.type==='pinchstart'){ scale=inst.getZoom(); }
-            inst.zoomAtPoint(scale*e.scale, {x:e.center.x, y:e.center.y});
-          });
-          o.svgElement.addEventListener('touchmove',function(e){ e.preventDefault(); }, {passive:false});
-        },
-        destroy:function(){ if(this.hammer) this.hammer.destroy(); }
-      };
-
-      tz = svgPanZoom(svg, { zoomEnabled:true, controlIconsEnabled:false, fit:true, center:true,
-        minZoom:0.25, maxZoom:6, zoomScaleSensitivity:0.12, contain:false,
-        customEventsHandler: touchHandler });
-      window.addEventListener('resize', ()=>{ tz.resize(); tz.fit(); tz.center(); });
-    }
+  (function(){
+    const root = document.getElementById('famtree');
+    if(!root) return;
+    const ul = document.createElement('ul');
+    FAM.forEach(function(n){ ul.appendChild(buildNode(n)); });
+    root.appendChild(ul);
   })();
+  function treeExpandAll(){ document.querySelectorAll('#famtree li').forEach(function(li){ li.classList.remove('collapsed'); }); }
+  function treeCollapseAll(){ document.querySelectorAll('#famtree li').forEach(function(li){ if(li.querySelector(':scope > ul')) li.classList.add('collapsed'); }); }
 
   // ---- Herkunfts-/Wanderungskarte ----
   (function(){
